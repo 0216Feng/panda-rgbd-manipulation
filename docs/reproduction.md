@@ -31,7 +31,7 @@ docker build -t panda-manipulation:dev .
 docker run --rm -it panda-manipulation:dev bash
 ```
 
-Inside the image, `/workspace` is the project root. Run the software validation command and source `/workspace/install/setup.bash` after building. The image installs declared dependencies; it does not silently treat missing dependencies as success. `.dockerignore` excludes Git metadata, existing builds, local secrets, experiment artifacts and ROS bags from the build context.
+Inside the image, `/workspace` is the project root. Run the software validation command and source `/workspace/install/setup.bash` after building. The image installs the dependencies exercised by headless CI and does not silently ignore installation failures. `ament_python` is supplied by the ROS base image. The optional `moveit_servo` runtime is excluded from container rosdep resolution because some public Jazzy apt snapshots do not publish `ros-jazzy-moveit-servo`; Servo demonstrations remain supported and tested in the maintained native WSL2 environment. `.dockerignore` excludes Git metadata, existing builds, local secrets, experiment artifacts and ROS bags from the build context.
 
 The devcontainer binds the current checkout at `/workspace`, so edits target the visible source rather than an old image copy. It no longer requests privileged mode. The default container setup is for headless software work; GUI forwarding is not configured by these commands.
 
@@ -44,6 +44,8 @@ The devcontainer binds the current checkout at `/workspace`, so edits target the
 3. Test XML and log collection even when a preceding check fails.
 
 The ROS graph smoke uses `use_synthetic_pose:=true` and `dry_run:=true`. Its JSON explicitly reports `physical_execution_verified: false`. A pass proves installed entrypoints and the synthetic topic chain work; it does not prove perception accuracy, motion planning, Gazebo contact or physical grasp success. Each attempt keeps a separate log directory, and timeout returns a nonzero status.
+
+The hosted workflow does not launch MoveIt Servo. Use the native setup for Servo, Gazebo GUI and physical simulation workflows until a supported Servo binary is available in the public Jazzy apt snapshot used by the container build.
 
 The CI workflow is prepared locally. A GitHub-hosted run and a fresh Docker image build must still be observed before claiming clean-environment validation; merely parsing this YAML or passing tests in an existing WSL installation is insufficient.
 

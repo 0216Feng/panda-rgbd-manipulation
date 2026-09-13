@@ -31,7 +31,7 @@ docker build -t panda-manipulation:dev .
 docker run --rm -it panda-manipulation:dev bash
 ```
 
-镜像中的 `/workspace` 是项目根目录。构建后运行软件验证，并 source `/workspace/install/setup.bash`。`.dockerignore` 排除了 Git 元数据、已有构建、密钥、实验产物和 rosbag。devcontainer 将当前 checkout 映射到 `/workspace`，默认用于无界面软件开发，不包含 GUI 转发设置。
+镜像中的 `/workspace` 是项目根目录。构建后运行软件验证，并 source `/workspace/install/setup.bash`。镜像安装无界面 CI 实际使用的依赖，任何安装失败仍会使构建失败；`ament_python` 已由 ROS 基础镜像提供。由于部分公开 Jazzy apt 快照不发布 `ros-jazzy-moveit-servo`，容器 rosdep 明确排除可选的 `moveit_servo` runtime；Servo 演示仍在维护者原生 WSL2 环境中支持并验证。`.dockerignore` 排除了 Git 元数据、已有构建、密钥、实验产物和 rosbag。devcontainer 将当前 checkout 映射到 `/workspace`，默认用于无界面软件开发，不包含 GUI 转发设置。
 
 ## CI 范围
 
@@ -42,6 +42,8 @@ docker run --rm -it panda-manipulation:dev bash
 3. 即使前一步失败，也收集测试 XML 与日志。
 
 节点图 smoke 使用 `use_synthetic_pose:=true` 与 `dry_run:=true`，JSON 明确写入 `physical_execution_verified: false`。通过仅证明安装后的入口和合成 topic 链路可用，不证明视觉精度、规划、Gazebo 接触或物理抓取。
+
+Hosted workflow 不启动 MoveIt Servo。在公开 Jazzy apt 快照提供受支持的 Servo 二进制包之前，Servo、Gazebo GUI 与物理仿真流程应使用原生 WSL2 安装。
 
 在首次推送并实际观察 GitHub-hosted workflow、以及完成全新 Docker 镜像构建之前，不应声明干净环境 CI 已通过。
 
