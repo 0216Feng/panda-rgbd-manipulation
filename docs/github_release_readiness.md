@@ -1,94 +1,53 @@
 [![English](https://img.shields.io/badge/lang-English-2563eb.svg)](github_release_readiness.md) [![简体中文](https://img.shields.io/badge/lang-简体中文-d73a49.svg)](github_release_readiness.zh-CN.md)
 
-# GitHub Release Readiness
+# GitHub Release Status
 
-Updated: 2026-09-13. Target: public `v1.0` candidate repository.
+Updated: 2026-09-13. Target: public `v1.0.0` release.
 
-## Current Decision
+## Decision
 
-The public repository is now suitable as a `v1.0` release candidate. Hosted CI
-has built the clean Docker image and passed the software and installed ROS graph
-checks. It is not yet a final `v1.0` release because the frozen-commit full
-physical acceptance matrix, final evidence curation, and release tag remain open.
+The release acceptance gate is complete and the final verdict is `PASS`.
+Physical simulation evidence was generated from frozen source commit `2fa0440`
+and is preserved under [`artifacts/baselines/v1.0.0`](../artifacts/baselines/v1.0.0/README.md).
+The documentation and curated evidence are packaged in a follow-up release-only
+commit; no package source changed after the accepted snapshot.
 
-## Completed For The Candidate
+## Completed Gates
 
-- ROS2 Jazzy package builds successfully in the maintained WSL2 environment.
-- Full software regression passed: 318 tests.
-- Installed synthetic ROS graph smoke passed in 3.49 s and observed target pose,
-  grasp candidates, and the complete dry-run state history. Its result explicitly
-  records `physical_execution_verified: false`.
-- Current-source paired payload experiment completed 10/10 task runs across
-  five unloaded/loaded pairs.
-- All five pre-descent state pairs matched; maximum joint delta was 0.00499 rad
-  against the 0.05 rad gate.
-- Loaded runs averaged 5.6 mm maximum payload drift and completed 5/5.
-- Source/configuration guard sidecars bind the paired results to SHA256
-  `862ef86cae466061f65fad6c64546f0d86ca6766475712bb19470d7fca7e988e`.
-- Historical fixed 10, random 20, and static-obstacle 90-trial evidence is
-  retained with explicit source/version boundaries.
-- README has a concise project overview, architecture, evidence table, quick
-  start, benchmark entry points, limitations, and documentation map.
-- README now includes three live RViz stills and an eight-frame animation from
-  one current-source RGB-D obstacle run that independently passed lift,
-  placement, upright-orientation, and direct-path-blocked validation.
-- README now links a 38.2-second H.264 Gazebo opposite-side video from a separate
-  successful current-source RGB-D obstacle run. The associated CSV, report,
-  configuration, source fingerprint, video metadata, and SHA256 are retained
-  in the public candidate evidence bundle.
-- Deterministic SVG charts summarize cohort success, planner behavior, outcome
-  quality, and matched payload diagnostics directly from committed CSV/JSON
-  evidence; CI rejects stale generated assets.
-- Root MIT license and Apache-2.0 third-party attribution are present.
-- Build caches, rosbags, raw run directories, historical logs, generated worlds,
-  and developer-only current artifacts are excluded from Git.
-- Public source/docs scan found no obvious credentials. Machine-specific paths
-  are excluded from the public evidence bundle.
-- Dockerfile, devcontainer, contribution guide, and least-privilege GitHub
-  Actions workflow are present.
-- GitHub Actions run `34735251206` passed on commit `42ecae5`: the clean Docker
-  image built successfully, deterministic portfolio assets matched their public
-  evidence, all 318 tests passed, and the installed ROS graph smoke succeeded.
-- The release runner now writes each audit to a unique timestamped directory
-  and uses the maintained RGB-D obstacle profile. A fresh central-barrier
-  physical acceptance trial passed after this update.
-- Public-facing documentation is paired in English and Simplified Chinese,
-  with language-switch badges and an automated pairing check.
-- A single v1.0 release runner now enforces a frozen clean commit, executes the
-  fixed/random/obstacle/safe-stop cohorts, verifies package source fingerprints,
-  and emits one machine-readable release verdict. The physical smoke passed
-  fixed `1/1`, seeded-random `1/1`, representative obstacles `3/3`, and real
-  wrench safe-stop `1/1`; the full physical matrix remains pending.
-- The injected safe-stop clip is complete: one `16 N`, `100 ms` Gazebo wrench
-  produced a strict `SAFE_STOP_PASS` with `107.8 ms` zero-command latency. The
-  H.264 clip, poster, source/config fingerprint, CSV, and JSON/Markdown safety
-  verdict are retained in the public candidate bundle.
+- Full software regression: 318/318 tests passed.
+- Installed synthetic ROS graph smoke passed and explicitly records
+  `physical_execution_verified: false`.
+- Fixed RGB-D physical acceptance: 10/10, Wilson 95% CI 72.2-100%.
+- Seeded-random RGB-D acceptance: 20/20, Wilson 95% CI 83.9-100%.
+- Representative static obstacles: 3/3, with all three unchecked direct paths
+  blocked and collision-aware transfer completed.
+- Gazebo wrench safe stop: 1/1; a `16 N`, `100 ms` disturbance produced a zero
+  command in `171.21 ms`, below the `200 ms` gate.
+- Source fingerprints are consistent across all four physical cohorts.
+- Hosted GitHub Actions run `34736305077` passed on source commit `2fa0440`:
+  clean Docker build, deterministic assets, all tests, and installed graph smoke.
+- Public documentation is paired in English and Simplified Chinese with language
+  switches and automated pairing checks.
+- Public evidence contains CSV/JSON/Markdown/SVG reports, configuration sidecars,
+  and source manifests; raw logs and generated worlds remain local.
+- README includes RViz and Gazebo stills, an end-to-end physical pick video, and
+  a real Gazebo disturbance safe-stop video with source-bound metadata.
+- MIT license, third-party attribution, Docker/devcontainer setup, contribution
+  guide, and least-privilege CI workflow are present.
 
-## Completed First Publication
+## Release Boundary
 
-1. Reviewed and committed the 234-file public candidate without local career
-   documents, raw runs, build caches, credentials, or machine-specific paths.
-2. Created and pushed the public `0216Feng/panda-rgbd-manipulation` repository.
-3. Observed a successful hosted CI run before adding the workflow badge.
-
-## Final v1.0 Gates After Upload
-
-- Re-run fixed 10 and randomized 20 RGB-D physical acceptance from one frozen
-  commit. Report all attempts and Wilson intervals.
-- Run the three representative static obstacles and one safe-stop injection from
-  that same commit.
-- Re-run the safe-stop case from the final frozen commit so its source manifest
-  matches the fixed/random/obstacle release cohorts; the public demonstration
-  clip and strict verdict format are complete.
-- Replace source-hash-only evidence references with the final commit SHA and tag
-  the accepted revision `v1.0.0`.
+The tag packages the accepted physical evidence and public documentation. The
+project is ready as a polished simulation portfolio release, but it is not
+hardware-ready software or an industrial safety certification.
 
 ## Claim Rules
 
-- Call the first public revision a `v1.0 candidate`, not hardware-ready software.
-- Keep current-source results separate from historical evidence.
-- Never describe Gazebo truth-assisted monitoring and correction as a purely
-  vision-only controller.
-- Do not pool infrastructure-excluded and raw success rates without both
-  denominators.
-- Preserve failed CSV rows and configuration/source sidecars.
+- Describe the result as Gazebo physical simulation validation.
+- Keep final `v1.0` cohorts separate from supplemental historical experiments.
+- Do not describe Gazebo truth-assisted monitoring and scoring as purely
+  vision-only control.
+- Preserve all attempted rows, fixed denominators, Wilson intervals, and
+  source/configuration sidecars.
+- Treat real-hardware deployment, calibration, latency characterization, and
+  safety assessment as future work.

@@ -1,0 +1,32 @@
+{
+  "arguments": {
+    "camera_perception": false,
+    "challenge_obstacles": false,
+    "challenge_scenario": null,
+    "cooldown_s": 3.0,
+    "cube_symmetric_placement": false,
+    "gazebo_gui": false,
+    "grasp_height_offset": null,
+    "grasp_pitch_offset_deg": 0.0,
+    "hold_after_result_s": 0.0,
+    "loaded_path_precheck": false,
+    "perception_suite": false,
+    "place_endpoint_precheck": false,
+    "planner_id": null,
+    "planner_suite": false,
+    "pre_place_height_step": 0.0,
+    "randomize_target": true,
+    "rgbd_perception": true,
+    "rviz": false,
+    "seed": 42,
+    "target_x_max": 0.56,
+    "target_x_min": 0.48,
+    "target_y_max": 0.06,
+    "target_y_min": -0.06,
+    "timeout_s": 300.0,
+    "transfer_diagnostics": false,
+    "trials": 20
+  },
+  "schema_version": 2,
+  "source_sha256": "0274ef4a500e12132fd0fb51fda7e15235cc05fbe201fa2dd3fe82c45aa15ad9"
+}

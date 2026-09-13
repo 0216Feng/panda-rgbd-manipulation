@@ -65,21 +65,24 @@ flowchart LR
 
 ## 实验证据
 
-不同源码版本和实验范围的结果严格分开，失败样本保留在分母中。
+最终 `v1.0` 验收矩阵基于同一冻结源码快照（`2fa0440`），每轮均启动全新的 Gazebo world，所有尝试都保留在分母中。
 
 | 证据集 | 结果 | 能够证明的内容 |
 | --- | ---: | --- |
-| 当前源码匹配载荷转运 | 10/10 任务；5/5 配对 | 从匹配下降入口执行空载/负载转运的重复性 |
-| 归档固定 RGB-D 发布批次 | 10/10 | 固定目标物理仿真验收 |
-| 归档随机 RGB-D 发布批次 | 19/20 | 固定种子的工作区变化，保留 1 次执行失败 |
-| 归档静态障碍矩阵 | 81/90 原始；81/86 有效启动 | 三类规划器、三类障碍，86/86 有效启动的直线路径均被阻断 |
+| 最终固定 RGB-D | 10/10（100%） | 无标记感知与物理抓放的重复性 |
+| 最终固定种子随机 RGB-D | 20/20（100%） | 目标位置变化；平均感知误差 `1.29 mm` |
+| 最终代表性障碍 | 3/3（100%） | 三类障碍直线路径均受阻，并完成碰撞感知转运 |
+| 最终 Gazebo wrench 安全停止 | 1/1 | 注入 `16 N`、`100 ms` 扰动后 `171.21 ms` 停止，低于 `200 ms` 门槛 |
 
-当前源码配对矩阵每组包含一次空载与一次负载运行。5 组下降入口的最大关节差不超过 `0.00499 rad`，负载漂移平均为 `5.6 mm`，两种模式均完成 5/5。由于空载误差接近零，项目不把相对 RMS 倍率作为主指标。
+固定、随机、障碍三个成功 cohort 的平均感知误差分别为 `0.55/1.29/2.49 mm`，平均放置误差分别为 `1.74/2.35/4.02 mm`。软件回归 `318/318` 通过，所有物理 cohort 的源码指纹一致。
 
-- [当前源码配对载荷报告](artifacts/baselines/v1_candidate_20260910/payload_transfer_paired5/report.md)
-- [归档 RGB-D 发布证据](artifacts/baselines/rgbd_release_20260905/README.md)
+此前的 90 轮三规划器对比和 5 组空载/负载配对实验保留为补充证据；它们有独立版本边界，不与最终验收矩阵合并统计。
+
+- [最终 v1.0 证据与方法](artifacts/baselines/v1.0.0/README.zh-CN.md)
+- [最终机器可读判定](artifacts/baselines/v1.0.0/release_summary.json)
 - [归档 90 轮障碍实验](artifacts/baselines/gazebo_obstacle_90_trials.md)
-- [GitHub 发布检查](docs/github_release_readiness.zh-CN.md)
+- [补充配对载荷报告](artifacts/baselines/v1_candidate_20260910/payload_transfer_paired5/report.md)
+- [发布状态与对外表述边界](docs/github_release_readiness.zh-CN.md)
 
 ![验收结果总览](docs/assets/benchmark_overview.svg)
 

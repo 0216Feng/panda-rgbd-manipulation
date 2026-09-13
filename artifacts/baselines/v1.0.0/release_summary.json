@@ -1,0 +1,125 @@
+{
+  "cohorts": [
+    {
+      "checks": {
+        "minimum_success_rate": true,
+        "perception_error": true,
+        "perception_validation": true,
+        "placement_error": true,
+        "rgbd_perception": true,
+        "trial_count": true,
+        "upright_orientation": true
+      },
+      "expected_trials": 10,
+      "failure_reasons": [],
+      "max_final_tilt_deg": 0.00010240302197661064,
+      "mean_perception_error_m": 0.0005502000786098768,
+      "mean_placement_error_m": 0.0017428904394048612,
+      "minimum_success_rate": 1.0,
+      "name": "fixed_rgbd",
+      "passed": true,
+      "success_rate": 1.0,
+      "success_rate_ci": [
+        0.7224672001371107,
+        0.9999999999999999
+      ],
+      "successes": 10,
+      "trials": 10
+    },
+    {
+      "checks": {
+        "minimum_success_rate": true,
+        "perception_error": true,
+        "perception_validation": true,
+        "placement_error": true,
+        "rgbd_perception": true,
+        "trial_count": true,
+        "upright_orientation": true
+      },
+      "expected_trials": 20,
+      "failure_reasons": [],
+      "max_final_tilt_deg": 0.00013954433358025328,
+      "mean_perception_error_m": 0.0012891376597435424,
+      "mean_placement_error_m": 0.0023481489569495747,
+      "minimum_success_rate": 0.85,
+      "name": "random_rgbd",
+      "passed": true,
+      "success_rate": 1.0,
+      "success_rate_ci": [
+        0.8388748419471806,
+        1.0
+      ],
+      "successes": 20,
+      "trials": 20
+    },
+    {
+      "checks": {
+        "direct_paths_blocked": true,
+        "minimum_success_rate": true,
+        "perception_error": true,
+        "perception_validation": true,
+        "placement_error": true,
+        "representative_scenarios": true,
+        "rgbd_perception": true,
+        "trial_count": true,
+        "upright_orientation": true
+      },
+      "expected_trials": 3,
+      "failure_reasons": [],
+      "max_final_tilt_deg": 7.999089083038908e-05,
+      "mean_perception_error_m": 0.0024924668377432633,
+      "mean_placement_error_m": 0.004015296514874213,
+      "minimum_success_rate": 1.0,
+      "name": "static_obstacles",
+      "passed": true,
+      "scenarios": [
+        "center_tall_barrier",
+        "negative_y_barrier",
+        "positive_y_barrier"
+      ],
+      "success_rate": 1.0,
+      "success_rate_ci": [
+        0.4385029682449546,
+        1.0
+      ],
+      "successes": 3,
+      "trials": 3
+    },
+    {
+      "checks": {
+        "latency_limit": true,
+        "trial_count": true,
+        "watchdog_safe_stop": true,
+        "wrench_applied": true,
+        "wrench_cleared": true
+      },
+      "expected_trials": 1,
+      "failure_reasons": [],
+      "max_stop_latency_s": 0.171206052,
+      "mean_stop_latency_s": 0.171206052,
+      "name": "gazebo_wrench_safe_stop",
+      "passed": true,
+      "safe_stop_rate": 1.0,
+      "safe_stop_rate_ci": [
+        0.20654931437723745,
+        1.0
+      ],
+      "safe_stops": 1,
+      "stop_latency_limit_s": 0.2,
+      "trials": 1
+    }
+  ],
+  "passed": true,
+  "profile": "full",
+  "schema_version": 1,
+  "source": {
+    "cohort_sha256": [
+      "0274ef4a500e12132fd0fb51fda7e15235cc05fbe201fa2dd3fe82c45aa15ad9",
+      "0274ef4a500e12132fd0fb51fda7e15235cc05fbe201fa2dd3fe82c45aa15ad9",
+      "0274ef4a500e12132fd0fb51fda7e15235cc05fbe201fa2dd3fe82c45aa15ad9",
+      "48957d06d12942a051f14f165522869e6acc07c5885ae41c7dd5d1bc84dbb31d"
+    ],
+    "consistent_across_all_cohorts": true,
+    "package_files": 100
+  }
+}

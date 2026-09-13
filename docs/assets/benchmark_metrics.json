@@ -5,36 +5,36 @@
       "ci_low": 0.7224672001371217,
       "label": "Fixed RGB-D",
       "rate": 1.0,
-      "scope": "historical",
+      "scope": "v1.0",
       "successes": 10,
       "trials": 10
     },
     {
-      "ci_high": 0.9911185511992042,
-      "ci_low": 0.7638688065532648,
+      "ci_high": 0.9999999999999999,
+      "ci_low": 0.838874841947188,
       "label": "Random RGB-D",
-      "rate": 0.95,
-      "scope": "historical",
-      "successes": 19,
+      "rate": 1.0,
+      "scope": "v1.0",
+      "successes": 20,
       "trials": 20
     },
     {
-      "ci_high": 0.9464932483028741,
-      "ci_low": 0.8207582512456661,
+      "ci_high": 1.0,
+      "ci_low": 0.4385029682449681,
       "label": "Static obstacles",
-      "rate": 0.9,
-      "scope": "historical",
-      "successes": 81,
-      "trials": 90
+      "rate": 1.0,
+      "scope": "v1.0",
+      "successes": 3,
+      "trials": 3
     },
     {
       "ci_high": 1.0,
-      "ci_low": 0.7224672001371217,
-      "label": "Matched payload",
+      "ci_low": 0.20654931437723745,
+      "label": "Wrench safe stop",
       "rate": 1.0,
-      "scope": "current",
-      "successes": 10,
-      "trials": 10
+      "scope": "v1.0",
+      "successes": 1,
+      "trials": 1
     }
   ],
   "payload": {
@@ -76,18 +76,25 @@
   "quality": [
     {
       "label": "Fixed RGB-D",
-      "perception_mm": 0.5501898751003141,
-      "placement_mm": 2.164476508446895
+      "perception_mm": 0.5502000786098767,
+      "placement_mm": 1.7428904394048612
     },
     {
       "label": "Random RGB-D",
-      "perception_mm": 1.2965703255103576,
-      "placement_mm": 2.1957135169409736
+      "perception_mm": 1.2891376597435424,
+      "placement_mm": 2.348148956949575
     },
     {
       "label": "Static obstacles",
-      "perception_mm": 0.0,
-      "placement_mm": 4.214870103382112
+      "perception_mm": 2.492466837743263,
+      "placement_mm": 4.015296514874214
     }
-  ]
+  ],
+  "release": {
+    "passed": true,
+    "profile": "full",
+    "safe_stop_latency_ms": 171.206052,
+    "safe_stop_limit_ms": 200.0,
+    "source_commit": "2fa0440a00afeb29ff1987e88ca6d676d2df65ac"
+  }
 }

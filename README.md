@@ -89,30 +89,30 @@ The detailed component and trust-boundary description is in
 
 ## Evidence
 
-Results are separated by source version and experimental scope. Failures remain
-in the denominators.
+The final `v1.0` acceptance matrix ran from one frozen source snapshot
+(`2fa0440`) in fresh Gazebo worlds. Every attempt remains in its denominator.
 
 | Evidence set | Result | What it establishes |
 | --- | ---: | --- |
-| Current-source matched payload transfer | 10/10 task runs; 5/5 matched pairs | Repeatable unloaded/loaded transfer from matched pre-descent states |
-| Archived fixed RGB-D release batch | 10/10 | Fixed-target physical simulation acceptance |
-| Archived randomized RGB-D release batch | 19/20 | Seeded workspace variation; one execution failure retained |
-| Archived static-obstacle matrix | 81/90 raw; 81/86 valid-start | Three planners across three barriers, with direct paths blocked in 86/86 valid starts |
+| Final fixed RGB-D | 10/10 (100%) | Repeatable markerless perception and physical pick-and-place |
+| Final seeded-random RGB-D | 20/20 (100%) | Target-position variation with mean `1.29 mm` perception error |
+| Final representative obstacles | 3/3 (100%) | Three barriers; direct paths blocked and collision-aware transfer verified |
+| Final Gazebo wrench safe stop | 1/1 | `16 N`, `100 ms` injection stopped motion in `171.21 ms` under the `200 ms` gate |
 
-The current-source paired matrix used one unloaded and one loaded run per pair.
-All five pairs matched within `0.00499 rad` maximum joint delta, loaded payload
-drift averaged `5.6 mm`, and both modes completed 5/5. The relative RMS error
-ratio is intentionally not used as a headline metric because the unloaded error
-is close to zero.
+Successful final runs averaged `0.55/1.29/2.49 mm` perception error and
+`1.74/2.35/4.02 mm` placement error for fixed, random, and obstacle cohorts.
+The full software regression passed `318/318`, and source fingerprints were
+consistent across all physical cohorts.
 
-The fixed/random RGB-D and 90-trial obstacle batches are retained as historical,
-versioned evidence. Later execution changes mean they are not represented as a
-full acceptance run of the current source tree.
+The earlier 90-trial three-planner comparison and five-pair loaded/unloaded
+transfer study remain useful supplemental experiments. They are versioned and
+are not pooled with the final acceptance matrix.
 
-- [Current-source paired payload report](artifacts/baselines/v1_candidate_20260910/payload_transfer_paired5/report.md)
-- [Archived RGB-D release evidence](artifacts/baselines/rgbd_release_20260905/README.md)
+- [Final v1.0 evidence and methodology](artifacts/baselines/v1.0.0/README.md)
+- [Final machine-readable verdict](artifacts/baselines/v1.0.0/release_summary.json)
 - [Archived 90-trial obstacle report](artifacts/baselines/gazebo_obstacle_90_trials.md)
-- [Release readiness and remaining gates](docs/github_release_readiness.md)
+- [Supplemental paired payload report](artifacts/baselines/v1_candidate_20260910/payload_transfer_paired5/report.md)
+- [Release status and claim boundaries](docs/github_release_readiness.md)
 
 ![Validation overview](docs/assets/benchmark_overview.svg)
 

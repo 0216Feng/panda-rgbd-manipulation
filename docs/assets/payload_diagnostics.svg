@@ -3,7 +3,7 @@
 <desc id="desc">Comparison of unloaded and loaded arm tracking errors with payload drift and state matching.</desc>
 <rect x="0.0" y="0.0" width="1200.0" height="640.0" rx="0.0" fill="#f7f8fa" stroke="none"/>
 <text x="60.0" y="66.0" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#17212b" text-anchor="start">Matched Payload Transfer Diagnostics</text>
-<text x="60.0" y="102.0" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#60717c" text-anchor="start">Current source, five unloaded/loaded pairs</text>
+<text x="60.0" y="102.0" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#60717c" text-anchor="start">Supplemental candidate study, five unloaded/loaded pairs</text>
 <rect x="45.0" y="135.0" width="720.0" height="435.0" rx="8.0" fill="#ffffff" stroke="#dfe4e8"/>
 <text x="75.0" y="180.0" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#17212b" text-anchor="start">Arm transfer tracking error</text>
 <text x="75.0" y="210.0" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#60717c" text-anchor="start">mrad; lower is better</text>

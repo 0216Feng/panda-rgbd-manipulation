@@ -1,3 +1,5 @@
+[![English](https://img.shields.io/badge/lang-English-2563eb.svg)](README.md) [![简体中文](https://img.shields.io/badge/lang-简体中文-d73a49.svg)](README.zh-CN.md)
+
 # Experiment Artifacts
 
 Generated benchmark data is kept outside the project root so source files and
@@ -13,6 +15,11 @@ entry points remain easy to scan.
   byte size, and modification time for every item moved during cleanup.
 
 No historical experiment was deleted during the 2026-08-29 cleanup.
+
+The final public release evidence is documented in
+[`baselines/v1.0.0/README.md`](baselines/v1.0.0/README.md). It contains compact
+reports and source/configuration fingerprints; raw logs and generated worlds
+remain excluded from Git.
 
 ## New Runs
 

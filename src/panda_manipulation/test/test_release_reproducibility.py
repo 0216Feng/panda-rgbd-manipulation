@@ -245,6 +245,7 @@ def test_public_docs_have_language_switches_and_pairs():
     pairs = (
         (ROOT / "README.md", ROOT / "README.zh-CN.md"),
         (ROOT / "docs" / "README.md", ROOT / "docs" / "README.zh-CN.md"),
+        (ROOT / "artifacts" / "README.md", ROOT / "artifacts" / "README.zh-CN.md"),
         (ROOT / "docs" / "architecture.md", ROOT / "docs" / "architecture.zh-CN.md"),
         (ROOT / "docs" / "reproduction.md", ROOT / "docs" / "reproduction.zh-CN.md"),
         (ROOT / "docs" / "demo_script.md", ROOT / "docs" / "demo_script.zh-CN.md"),
@@ -256,6 +257,10 @@ def test_public_docs_have_language_switches_and_pairs():
         (
             ROOT / "docs" / "assets" / "demo" / "README.md",
             ROOT / "docs" / "assets" / "demo" / "README.zh-CN.md",
+        ),
+        (
+            ROOT / "artifacts" / "baselines" / "v1.0.0" / "README.md",
+            ROOT / "artifacts" / "baselines" / "v1.0.0" / "README.zh-CN.md",
         ),
     )
     for english, chinese in pairs:

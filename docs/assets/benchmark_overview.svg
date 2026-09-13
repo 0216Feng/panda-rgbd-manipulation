@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
 <title id="title">Panda manipulation validation overview</title>
-<desc id="desc">Success rates, planner comparison, placement quality, perception quality, and payload metrics from public benchmark files.</desc>
+<desc id="desc">Final v1.0 success rates and quality metrics, plus supplemental planner and payload studies from public benchmark files.</desc>
 <rect x="0.0" y="0.0" width="1600.0" height="980.0" rx="0.0" fill="#f7f8fa" stroke="none"/>
 <text x="70.0" y="70.0" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="700" fill="#17212b" text-anchor="start">Panda Manipulation Validation</text>
-<text x="70.0" y="108.0" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="400" fill="#52616b" text-anchor="start">Physical simulation evidence with explicit cohort boundaries</text>
+<text x="70.0" y="108.0" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="400" fill="#52616b" text-anchor="start">Final v1.0 physical acceptance plus clearly separated supplemental studies</text>
 <rect x="55.0" y="145.0" width="730.0" height="365.0" rx="8.0" fill="#ffffff" stroke="#dfe4e8"/>
 <text x="85.0" y="190.0" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" fill="#17212b" text-anchor="start">End-to-end success rate</text>
 <text x="85.0" y="222.0" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#60717c" text-anchor="start">Wilson 95% interval shown by whiskers</text>
@@ -16,28 +16,28 @@
 <text x="740.0" y="291.0" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#167d6d" text-anchor="end">10/10</text>
 <text x="85.0" y="349.0" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="600" fill="#263238" text-anchor="start">Random RGB-D</text>
 <rect x="300.0" y="328.0" width="420.0" height="28.0" rx="3.0" fill="#e8edf0" stroke="none"/>
-<rect x="300.0" y="328.0" width="399.0" height="28.0" rx="3.0" fill="#2878b5" stroke="none"/>
-<line x1="620.8" y1="342.0" x2="716.3" y2="342.0" stroke="#17212b" stroke-width="2.0"/>
-<line x1="620.8" y1="335.0" x2="620.8" y2="349.0" stroke="#17212b" stroke-width="2.0"/>
-<line x1="716.3" y1="335.0" x2="716.3" y2="349.0" stroke="#17212b" stroke-width="2.0"/>
-<text x="740.0" y="349.0" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#2878b5" text-anchor="end">19/20</text>
+<rect x="300.0" y="328.0" width="420.0" height="28.0" rx="3.0" fill="#2878b5" stroke="none"/>
+<line x1="652.3" y1="342.0" x2="720.0" y2="342.0" stroke="#17212b" stroke-width="2.0"/>
+<line x1="652.3" y1="335.0" x2="652.3" y2="349.0" stroke="#17212b" stroke-width="2.0"/>
+<line x1="720.0" y1="335.0" x2="720.0" y2="349.0" stroke="#17212b" stroke-width="2.0"/>
+<text x="740.0" y="349.0" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#2878b5" text-anchor="end">20/20</text>
 <text x="85.0" y="407.0" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="600" fill="#263238" text-anchor="start">Static obstacles</text>
 <rect x="300.0" y="386.0" width="420.0" height="28.0" rx="3.0" fill="#e8edf0" stroke="none"/>
-<rect x="300.0" y="386.0" width="378.0" height="28.0" rx="3.0" fill="#d08a24" stroke="none"/>
-<line x1="644.7" y1="400.0" x2="697.5" y2="400.0" stroke="#17212b" stroke-width="2.0"/>
-<line x1="644.7" y1="393.0" x2="644.7" y2="407.0" stroke="#17212b" stroke-width="2.0"/>
-<line x1="697.5" y1="393.0" x2="697.5" y2="407.0" stroke="#17212b" stroke-width="2.0"/>
-<text x="740.0" y="407.0" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#d08a24" text-anchor="end">81/90</text>
-<text x="85.0" y="465.0" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="600" fill="#263238" text-anchor="start">Matched payload</text>
+<rect x="300.0" y="386.0" width="420.0" height="28.0" rx="3.0" fill="#d08a24" stroke="none"/>
+<line x1="484.2" y1="400.0" x2="720.0" y2="400.0" stroke="#17212b" stroke-width="2.0"/>
+<line x1="484.2" y1="393.0" x2="484.2" y2="407.0" stroke="#17212b" stroke-width="2.0"/>
+<line x1="720.0" y1="393.0" x2="720.0" y2="407.0" stroke="#17212b" stroke-width="2.0"/>
+<text x="740.0" y="407.0" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#d08a24" text-anchor="end">3/3</text>
+<text x="85.0" y="465.0" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="600" fill="#263238" text-anchor="start">Wrench safe stop</text>
 <rect x="300.0" y="444.0" width="420.0" height="28.0" rx="3.0" fill="#e8edf0" stroke="none"/>
 <rect x="300.0" y="444.0" width="420.0" height="28.0" rx="3.0" fill="#6f52a3" stroke="none"/>
-<line x1="603.4" y1="458.0" x2="720.0" y2="458.0" stroke="#17212b" stroke-width="2.0"/>
-<line x1="603.4" y1="451.0" x2="603.4" y2="465.0" stroke="#17212b" stroke-width="2.0"/>
+<line x1="386.8" y1="458.0" x2="720.0" y2="458.0" stroke="#17212b" stroke-width="2.0"/>
+<line x1="386.8" y1="451.0" x2="386.8" y2="465.0" stroke="#17212b" stroke-width="2.0"/>
 <line x1="720.0" y1="451.0" x2="720.0" y2="465.0" stroke="#17212b" stroke-width="2.0"/>
-<text x="740.0" y="465.0" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#6f52a3" text-anchor="end">10/10</text>
+<text x="740.0" y="465.0" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#6f52a3" text-anchor="end">1/1</text>
 <rect x="815.0" y="145.0" width="730.0" height="365.0" rx="8.0" fill="#ffffff" stroke="#dfe4e8"/>
-<text x="845.0" y="190.0" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" fill="#17212b" text-anchor="start">Static-obstacle planner comparison</text>
-<text x="845.0" y="222.0" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#60717c" text-anchor="start">Raw task success; mean OMPL time from 30 trials each</text>
+<text x="845.0" y="190.0" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" fill="#17212b" text-anchor="start">Supplemental planner comparison</text>
+<text x="845.0" y="222.0" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#60717c" text-anchor="start">Prior 90-trial obstacle study; 30 trials per planner</text>
 <text x="845.0" y="293.0" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="650" fill="#263238" text-anchor="start">PRM</text>
 <rect x="1015.0" y="270.0" width="330.0" height="30.0" rx="3.0" fill="#e8edf0" stroke="none"/>
 <rect x="1015.0" y="270.0" width="319.0" height="30.0" rx="3.0" fill="#167d6d" stroke="none"/>
@@ -57,23 +57,23 @@
 <text x="85.0" y="585.0" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" fill="#17212b" text-anchor="start">Outcome quality</text>
 <text x="85.0" y="617.0" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#60717c" text-anchor="start">Successful trials only; lower is better</text>
 <text x="85.0" y="686.0" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="600" fill="#263238" text-anchor="start">Fixed RGB-D</text>
-<text x="355.0" y="686.0" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#2878b5" text-anchor="start">2.2 mm placement</text>
+<text x="355.0" y="686.0" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#2878b5" text-anchor="start">1.7 mm placement</text>
 <text x="590.0" y="686.0" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="600" fill="#167d6d" text-anchor="start">0.6 mm RGB-D error</text>
 <text x="85.0" y="748.0" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="600" fill="#263238" text-anchor="start">Random RGB-D</text>
-<text x="355.0" y="748.0" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#2878b5" text-anchor="start">2.2 mm placement</text>
+<text x="355.0" y="748.0" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#2878b5" text-anchor="start">2.3 mm placement</text>
 <text x="590.0" y="748.0" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="600" fill="#167d6d" text-anchor="start">1.3 mm RGB-D error</text>
 <text x="85.0" y="810.0" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="600" fill="#263238" text-anchor="start">Static obstacles</text>
-<text x="355.0" y="810.0" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#2878b5" text-anchor="start">4.2 mm placement</text>
-<text x="590.0" y="810.0" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="600" fill="#167d6d" text-anchor="start">N/A perception</text>
+<text x="355.0" y="810.0" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#2878b5" text-anchor="start">4.0 mm placement</text>
+<text x="590.0" y="810.0" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="600" fill="#167d6d" text-anchor="start">2.5 mm RGB-D error</text>
 <rect x="815.0" y="540.0" width="730.0" height="330.0" rx="8.0" fill="#ffffff" stroke="#dfe4e8"/>
-<text x="845.0" y="585.0" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" fill="#17212b" text-anchor="start">Current-source payload transfer</text>
-<text x="845.0" y="617.0" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#60717c" text-anchor="start">Five matched unloaded/loaded pairs</text>
+<text x="845.0" y="585.0" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" fill="#17212b" text-anchor="start">Supplemental payload transfer</text>
+<text x="845.0" y="617.0" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#60717c" text-anchor="start">Prior candidate study; five matched unloaded/loaded pairs</text>
 <text x="845.0" y="690.0" font-family="Arial, Helvetica, sans-serif" font-size="52" font-weight="700" fill="#167d6d" text-anchor="start">5/5</text>
 <text x="965.0" y="684.0" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="600" fill="#263238" text-anchor="start">state-matched pairs</text>
 <text x="845.0" y="748.0" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="700" fill="#2878b5" text-anchor="start">4.99 mrad</text>
 <text x="1040.0" y="745.0" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52616b" text-anchor="start">maximum start-state delta</text>
 <text x="845.0" y="806.0" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="700" fill="#d08a24" text-anchor="start">5.6 mm</text>
 <text x="1040.0" y="803.0" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52616b" text-anchor="start">mean maximum payload drift</text>
-<text x="70.0" y="925.0" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#60717c" text-anchor="start">Historical RGB-D and obstacle cohorts are not pooled with the current-source payload cohort. Gazebo truth assists online monitoring and scoring.</text>
+<text x="70.0" y="925.0" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#60717c" text-anchor="start">v1.0 cohorts share source 2fa0440; planner and payload panels are supplemental. Gazebo truth assists monitoring and scoring.</text>
 <text x="1530.0" y="952.0" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="400" fill="#7b8991" text-anchor="end">Generated from committed CSV/JSON evidence</text>
 </svg>

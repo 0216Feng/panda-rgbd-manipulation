@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+<title id="title">Gazebo obstacle benchmark planner comparison</title>
+<desc id="desc">Physical success rate, OMPL planning time, joint path length and end-to-end time by planner.</desc>
+<rect width="1200" height="760" fill="#f8fafc"/>
+<text x="48" y="52" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#111827">Gazebo Obstacle Benchmark</text>
+<text x="48" y="82" font-family="Arial, sans-serif" font-size="15" fill="#475569">Raw 3/3 (100.0%); valid-start 3/3 (100.0%); 3/3 collision-aware direct paths blocked</text>
+<rect x="40" y="112" width="550" height="284" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+<text x="64" y="148" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Valid-start physical success rate</text>
+<text x="64" y="172" font-family="Arial, sans-serif" font-size="12" fill="#64748b">Controller startup failures excluded</text>
+<text x="64" y="228" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#334155">RRTConnect</text>
+<rect x="190" y="211" width="292" height="22" rx="4" fill="#e2e8f0"/>
+<rect x="190" y="211" width="292.00" height="22" rx="4" fill="#0f766e"/>
+<text x="572" y="228" text-anchor="end" font-family="Arial, sans-serif" font-size="13" fill="#0f172a">100%</text>
+<rect x="610" y="112" width="550" height="284" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+<text x="634" y="148" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Mean OMPL planning time</text>
+<text x="634" y="172" font-family="Arial, sans-serif" font-size="12" fill="#64748b">Log scale highlights sampling cost</text>
+<text x="634" y="228" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#334155">RRTConnect</text>
+<rect x="760" y="211" width="292" height="22" rx="4" fill="#e2e8f0"/>
+<rect x="760" y="211" width="47.23" height="22" rx="4" fill="#0f766e"/>
+<text x="1142" y="228" text-anchor="end" font-family="Arial, sans-serif" font-size="13" fill="#0f172a">0.0444 s</text>
+<rect x="40" y="428" width="550" height="284" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+<text x="64" y="464" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Mean joint-space path length</text>
+<text x="64" y="488" font-family="Arial, sans-serif" font-size="12" fill="#64748b">Accumulated OMPL path across the task</text>
+<text x="64" y="544" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#334155">RRTConnect</text>
+<rect x="190" y="527" width="292" height="22" rx="4" fill="#e2e8f0"/>
+<rect x="190" y="527" width="253.91" height="22" rx="4" fill="#0f766e"/>
+<text x="572" y="544" text-anchor="end" font-family="Arial, sans-serif" font-size="13" fill="#0f172a">4.932 rad</text>
+<rect x="610" y="428" width="550" height="284" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+<text x="634" y="464" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Mean end-to-end trial time</text>
+<text x="634" y="488" font-family="Arial, sans-serif" font-size="12" fill="#64748b">Valid starts: world, planning, execution and validation</text>
+<text x="634" y="544" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#334155">RRTConnect</text>
+<rect x="760" y="527" width="292" height="22" rx="4" fill="#e2e8f0"/>
+<rect x="760" y="527" width="253.91" height="22" rx="4" fill="#0f766e"/>
+<text x="1142" y="544" text-anchor="end" font-family="Arial, sans-serif" font-size="13" fill="#0f172a">136.5 s</text>
+<text x="48" y="742" font-family="Arial, sans-serif" font-size="12" fill="#64748b">Success requires collision-aware planning, physical lift, upright placement and return-home.</text>
+</svg>

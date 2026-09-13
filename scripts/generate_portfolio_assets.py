@@ -50,19 +50,23 @@ def mean_or_zero(values: list[float]) -> float:
 
 
 def load_metrics() -> dict:
-    fixed = read_csv(BASELINES / "rgbd_release_20260905" / "fixed10" / "results.csv")
-    random = read_csv(BASELINES / "rgbd_release_20260905" / "random20" / "results.csv")
-    obstacle = read_csv(BASELINES / "gazebo_obstacle_90_trials.csv")
+    release_path = BASELINES / "v1.0.0"
+    release_summary = json.loads(
+        (release_path / "release_summary.json").read_text(encoding="utf-8")
+    )
+    fixed = read_csv(release_path / "fixed_rgbd" / "results.csv")
+    random = read_csv(release_path / "random_rgbd" / "results.csv")
+    static = read_csv(release_path / "static_obstacles" / "results.csv")
+    planner_obstacle = read_csv(BASELINES / "gazebo_obstacle_90_trials.csv")
     paired_path = BASELINES / "v1_candidate_20260910" / "payload_transfer_paired5"
     paired = read_csv(paired_path / "results.csv")
     paired_summary = json.loads((paired_path / "summary.json").read_text(encoding="utf-8"))
 
     cohorts = []
-    for label, rows, scope in (
-        ("Fixed RGB-D", fixed, "historical"),
-        ("Random RGB-D", random, "historical"),
-        ("Static obstacles", obstacle, "historical"),
-        ("Matched payload", paired, "current"),
+    for label, rows in (
+        ("Fixed RGB-D", fixed),
+        ("Random RGB-D", random),
+        ("Static obstacles", static),
     ):
         success_count = len(successes(rows))
         low, high = wilson_interval(success_count, len(rows))
@@ -74,13 +78,29 @@ def load_metrics() -> dict:
                 "rate": success_count / len(rows),
                 "ci_low": low,
                 "ci_high": high,
-                "scope": scope,
+                "scope": "v1.0",
             }
         )
+    safe_stop = next(
+        cohort
+        for cohort in release_summary["cohorts"]
+        if cohort["name"] == "gazebo_wrench_safe_stop"
+    )
+    cohorts.append(
+        {
+            "label": "Wrench safe stop",
+            "successes": safe_stop["safe_stops"],
+            "trials": safe_stop["trials"],
+            "rate": safe_stop["safe_stop_rate"],
+            "ci_low": safe_stop["safe_stop_rate_ci"][0],
+            "ci_high": safe_stop["safe_stop_rate_ci"][1],
+            "scope": "v1.0",
+        }
+    )
 
     planners = []
-    for planner_id in sorted({row["planner_id"] for row in obstacle}):
-        rows = [row for row in obstacle if row["planner_id"] == planner_id]
+    for planner_id in sorted({row["planner_id"] for row in planner_obstacle}):
+        rows = [row for row in planner_obstacle if row["planner_id"] == planner_id]
         ok = successes(rows)
         short_name = planner_id.replace("kConfigDefault", "")
         planners.append(
@@ -98,7 +118,7 @@ def load_metrics() -> dict:
     for label, rows in (
         ("Fixed RGB-D", fixed),
         ("Random RGB-D", random),
-        ("Static obstacles", obstacle),
+        ("Static obstacles", static),
     ):
         ok = successes(rows)
         quality.append(
@@ -112,6 +132,13 @@ def load_metrics() -> dict:
     loaded = [row for row in paired if row.get("mode") == "loaded"]
     unloaded = [row for row in paired if row.get("mode") == "unloaded"]
     return {
+        "release": {
+            "profile": release_summary["profile"],
+            "passed": release_summary["passed"],
+            "source_commit": (release_path / "commit.txt").read_text(encoding="utf-8").strip(),
+            "safe_stop_latency_ms": safe_stop["max_stop_latency_s"] * 1000.0,
+            "safe_stop_limit_ms": safe_stop["stop_latency_limit_s"] * 1000.0,
+        },
         "cohorts": cohorts,
         "planners": planners,
         "quality": quality,
@@ -152,10 +179,10 @@ def render_overview(metrics: dict) -> str:
     parts = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc">',
         '<title id="title">Panda manipulation validation overview</title>',
-        '<desc id="desc">Success rates, planner comparison, placement quality, perception quality, and payload metrics from public benchmark files.</desc>',
+        '<desc id="desc">Final v1.0 success rates and quality metrics, plus supplemental planner and payload studies from public benchmark files.</desc>',
         rect(0, 0, width, height, "#f7f8fa", 0),
         text(70, 70, "Panda Manipulation Validation", 38, "#17212b", 700),
-        text(70, 108, "Physical simulation evidence with explicit cohort boundaries", 20, "#52616b"),
+        text(70, 108, "Final v1.0 physical acceptance plus clearly separated supplemental studies", 20, "#52616b"),
     ]
 
     panel_fill = "#ffffff"
@@ -182,8 +209,8 @@ def render_overview(metrics: dict) -> str:
 
     parts += [
         rect(815, 145, 730, 365, panel_fill, 8, "#dfe4e8"),
-        text(845, 190, "Static-obstacle planner comparison", 27, "#17212b", 700),
-        text(845, 222, "Raw task success; mean OMPL time from 30 trials each", 17, "#60717c"),
+        text(845, 190, "Supplemental planner comparison", 27, "#17212b", 700),
+        text(845, 222, "Prior 90-trial obstacle study; 30 trials per planner", 17, "#60717c"),
     ]
     planner_colors = {"PRM": "#167d6d", "RRTConnect": "#2878b5", "RRTstar": "#d08a24"}
     for index, planner in enumerate(metrics["planners"]):
@@ -215,15 +242,15 @@ def render_overview(metrics: dict) -> str:
     payload = metrics["payload"]
     parts += [
         rect(815, 540, 730, 330, panel_fill, 8, "#dfe4e8"),
-        text(845, 585, "Current-source payload transfer", 27, "#17212b", 700),
-        text(845, 617, "Five matched unloaded/loaded pairs", 17, "#60717c"),
+        text(845, 585, "Supplemental payload transfer", 27, "#17212b", 700),
+        text(845, 617, "Prior candidate study; five matched unloaded/loaded pairs", 17, "#60717c"),
         text(845, 690, f'{payload["matched_pairs"]}/{payload["pair_count"]}', 52, "#167d6d", 700),
         text(965, 684, "state-matched pairs", 20, "#263238", 600),
         text(845, 748, f'{payload["max_state_delta_rad"] * 1000:.2f} mrad', 31, "#2878b5", 700),
         text(1040, 745, "maximum start-state delta", 18, "#52616b"),
         text(845, 806, f'{payload["loaded_mean_drift_m"] * 1000:.1f} mm', 31, "#d08a24", 700),
         text(1040, 803, "mean maximum payload drift", 18, "#52616b"),
-        text(70, 925, "Historical RGB-D and obstacle cohorts are not pooled with the current-source payload cohort. Gazebo truth assists online monitoring and scoring.", 17, "#60717c"),
+        text(70, 925, f'v1.0 cohorts share source {metrics["release"]["source_commit"][:7]}; planner and payload panels are supplemental. Gazebo truth assists monitoring and scoring.', 17, "#60717c"),
         text(1530, 952, "Generated from committed CSV/JSON evidence", 15, "#7b8991", 400, "end"),
         "</svg>",
     ]
@@ -244,7 +271,7 @@ def render_payload(metrics: dict) -> str:
         '<desc id="desc">Comparison of unloaded and loaded arm tracking errors with payload drift and state matching.</desc>',
         rect(0, 0, width, height, "#f7f8fa", 0),
         text(60, 66, "Matched Payload Transfer Diagnostics", 34, "#17212b", 700),
-        text(60, 102, "Current source, five unloaded/loaded pairs", 19, "#60717c"),
+        text(60, 102, "Supplemental candidate study, five unloaded/loaded pairs", 19, "#60717c"),
         rect(45, 135, 720, 435, "#ffffff", 8, "#dfe4e8"),
         text(75, 180, "Arm transfer tracking error", 25, "#17212b", 700),
         text(75, 210, "mrad; lower is better", 17, "#60717c"),
