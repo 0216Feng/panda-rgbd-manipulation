@@ -76,10 +76,10 @@
       <parameters>$(find panda_manipulation)/config/gazebo_controllers.yaml</parameters>
       <hold_joints>true</hold_joints>
       <!-- gz_ros2_control implements position commands as a discrete first-order
-           velocity loop. Keep the gain at or below 1.0 so slow Cartesian segments
-           converge instead of oscillating around the controller goal tolerance.
-           The fingers use effort PID control below. -->
-      <position_proportional_gain>1.0</position_proportional_gain>
+           loop. A gain of 1.0 is the non-oscillating stability boundary; use
+           margin for Gazebo/controller update jitter during low-speed Cartesian
+           execution. The fingers use effort PID control below. -->
+      <position_proportional_gain>0.5</position_proportional_gain>
     </plugin>
   </gazebo>
 

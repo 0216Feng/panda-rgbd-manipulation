@@ -207,7 +207,7 @@ class GazeboAssetTests(unittest.TestCase):
         self.assertIsNotNone(gazebo_plugin)
         self.assertEqual(
             gazebo_plugin.findtext("position_proportional_gain"),
-            "1.0",
+            "0.5",
         )
 
     def test_vendored_panda_model_has_symmetric_finger_inertia(self):
