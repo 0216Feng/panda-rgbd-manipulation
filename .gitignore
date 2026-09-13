@@ -1,0 +1,61 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+
+# ROS2 / colcon
+build/
+install/
+log/
+
+# Generated benchmark artifacts
+benchmark_results.csv
+benchmark_report.md
+gazebo_physics_benchmark.csv
+gazebo_physics_benchmark.md
+gazebo_benchmark_logs/
+/gazebo_*benchmark.svg
+/*_logs/
+/payload_transfer_*/
+/dynamic_*.csv
+/dynamic_*.md
+/dynamic_*.svg
+/gazebo_*.csv
+/gazebo_*.md
+/gazebo_*.svg
+/pick_*.csv
+/pick_*.md
+/release_*.csv
+/release_*.md
+/release_*.svg
+/release_*.csv.config.json
+/release_*.csv.source.json
+/rgbd_*.log
+/artifacts/archive/
+/artifacts/runs/
+
+# Keep curated reports and the archive manifest visible to the project.
+!/artifacts/baselines/
+!/artifacts/current/
+!/artifacts/archive_manifest_*.csv
+
+# Public evidence keeps compact reports, tables, charts, and manifests only.
+# Raw logs, generated worlds, rosbags, and development checkpoints stay local.
+/artifacts/current/
+/artifacts/baselines/**/*_logs/
+/artifacts/baselines/**/*.log
+/artifacts/baselines/**/worlds/
+
+# Editors
+.vscode/
+.idea/
+
+# Local-only career and internal planning documents
+/docs/resume.md
+/docs/resume.zh-CN.md
+/docs/interview_notes.md
+/docs/interview_notes.zh-CN.md
+/docs/v1_release_plan.md
+/docs/long_term_roadmap.md
+/docs/benchmark_summary_template.md

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" role="img" aria-labelledby="title desc">
+<title id="title">Matched payload transfer diagnostics</title>
+<desc id="desc">Comparison of unloaded and loaded arm tracking errors with payload drift and state matching.</desc>
+<rect x="0.0" y="0.0" width="1200.0" height="640.0" rx="0.0" fill="#f7f8fa" stroke="none"/>
+<text x="60.0" y="66.0" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#17212b" text-anchor="start">Matched Payload Transfer Diagnostics</text>
+<text x="60.0" y="102.0" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#60717c" text-anchor="start">Current source, five unloaded/loaded pairs</text>
+<rect x="45.0" y="135.0" width="720.0" height="435.0" rx="8.0" fill="#ffffff" stroke="#dfe4e8"/>
+<text x="75.0" y="180.0" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#17212b" text-anchor="start">Arm transfer tracking error</text>
+<text x="75.0" y="210.0" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#60717c" text-anchor="start">mrad; lower is better</text>
+<text x="75.0" y="284.0" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="600" fill="#263238" text-anchor="start">Unloaded mean max</text>
+<rect x="300.0" y="260.0" width="390.0" height="32.0" rx="3.0" fill="#e8edf0" stroke="none"/>
+<rect x="300.0" y="260.0" width="8.2" height="32.0" rx="3.0" fill="#2878b5" stroke="none"/>
+<text x="710.0" y="284.0" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#2878b5" text-anchor="end">0.19</text>
+<text x="75.0" y="376.0" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="600" fill="#263238" text-anchor="start">Loaded mean max</text>
+<rect x="300.0" y="352.0" width="390.0" height="32.0" rx="3.0" fill="#e8edf0" stroke="none"/>
+<rect x="300.0" y="352.0" width="89.2" height="32.0" rx="3.0" fill="#167d6d" stroke="none"/>
+<text x="710.0" y="376.0" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#167d6d" text-anchor="end">2.11</text>
+<text x="75.0" y="468.0" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="600" fill="#263238" text-anchor="start">Loaded P95 max</text>
+<rect x="300.0" y="444.0" width="390.0" height="32.0" rx="3.0" fill="#e8edf0" stroke="none"/>
+<rect x="300.0" y="444.0" width="339.1" height="32.0" rx="3.0" fill="#d08a24" stroke="none"/>
+<text x="710.0" y="468.0" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#d08a24" text-anchor="end">8.01</text>
+<rect x="795.0" y="135.0" width="360.0" height="435.0" rx="8.0" fill="#ffffff" stroke="#dfe4e8"/>
+<text x="825.0" y="180.0" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#17212b" text-anchor="start">Physical stability</text>
+<text x="825.0" y="260.0" font-family="Arial, Helvetica, sans-serif" font-size="43" font-weight="700" fill="#d08a24" text-anchor="start">5.6 mm</text>
+<text x="825.0" y="292.0" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#60717c" text-anchor="start">mean maximum payload drift</text>
+<text x="825.0" y="375.0" font-family="Arial, Helvetica, sans-serif" font-size="43" font-weight="700" fill="#2878b5" text-anchor="start">4.99 mrad</text>
+<text x="825.0" y="407.0" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#60717c" text-anchor="start">maximum pair start delta</text>
+<text x="825.0" y="490.0" font-family="Arial, Helvetica, sans-serif" font-size="43" font-weight="700" fill="#167d6d" text-anchor="start">5/5 pairs</text>
+<text x="825.0" y="522.0" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#60717c" text-anchor="start">matched under 50 mrad gate</text>
+<text x="60.0" y="615.0" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#60717c" text-anchor="start">The loaded/unloaded relative ratio is omitted because unloaded RMS is near zero; absolute errors and drift are reported instead.</text>
+</svg>

@@ -1,0 +1,52 @@
+name: ROS2 Jazzy Software Checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ros2-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  software:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Build the project dependency image
+        run: docker build --tag panda-ci .
+      - name: Build, test and verify installed ROS topic wiring
+        run: |
+          docker run --name panda-ci-checks panda-ci bash -lc '
+            python3 scripts/generate_portfolio_assets.py --check &&
+            SKIP_PHYSICAL=1 bash scripts/run_release_candidate_validation.sh &&
+            source /opt/ros/jazzy/setup.bash &&
+            source install/setup.bash &&
+            python3 scripts/check_ros_graph_smoke.py --timeout-s 45
+          '
+      - name: Collect diagnostics even on failure
+        if: always()
+        run: |
+          mkdir -p ci-results
+          if docker inspect panda-ci-checks >/dev/null 2>&1; then
+            for path in build/panda_manipulation/pytest.xml log artifacts/runs/ros_graph_smoke; do
+              docker cp "panda-ci-checks:/workspace/$path" ci-results/ || printf 'Unavailable: %s\n' "$path"
+            done
+          fi
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: jazzy-software-checks
+          path: ci-results/
+          retention-days: 14
+          if-no-files-found: warn

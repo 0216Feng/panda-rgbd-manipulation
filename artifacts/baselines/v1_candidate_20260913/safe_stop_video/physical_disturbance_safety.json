@@ -1,0 +1,45 @@
+{
+  "all_meet_strictest_stop_latency_limit": true,
+  "configurations": [
+    {
+      "delay_s": 0.5,
+      "duration_s": 0.1,
+      "force_n": [
+        0.0,
+        16.0,
+        0.0
+      ],
+      "safe_stops": 1,
+      "trials": 1
+    }
+  ],
+  "disturbances_applied": 1,
+  "disturbances_cleared": 1,
+  "failed_verdict_reasons": [],
+  "max_stop_latency_s": 0.10784178400000001,
+  "mean_stop_latency_s": 0.10784178400000001,
+  "median_stop_latency_s": 0.10784178400000001,
+  "p95_stop_latency_s": 0.10784178400000001,
+  "safe_stop_rate": 1.0,
+  "safe_stop_rate_ci": [
+    0.20654931437723745,
+    1.0
+  ],
+  "safe_stops": 1,
+  "stages": [
+    {
+      "applied": 1,
+      "cleared": 1,
+      "max_stop_latency_s": 0.10784178400000001,
+      "mean_stop_latency_s": 0.10784178400000001,
+      "safe_stops": 1,
+      "stage": 3,
+      "trials": 1
+    }
+  ],
+  "stop_latency_limit_s": 0.2,
+  "stop_latency_limits_s": [
+    0.2
+  ],
+  "total_trials": 1
+}

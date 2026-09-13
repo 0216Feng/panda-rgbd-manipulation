@@ -1,0 +1,32 @@
+{
+  "arguments": {
+    "camera_perception": false,
+    "challenge_obstacles": true,
+    "challenge_scenario": "center_tall_barrier",
+    "cooldown_s": 3.0,
+    "cube_symmetric_placement": false,
+    "gazebo_gui": false,
+    "grasp_height_offset": 0.115,
+    "grasp_pitch_offset_deg": -20.0,
+    "hold_after_result_s": 0.0,
+    "loaded_path_precheck": true,
+    "perception_suite": false,
+    "place_endpoint_precheck": false,
+    "planner_id": "RRTConnectkConfigDefault",
+    "planner_suite": false,
+    "pre_place_height_step": 0.0,
+    "randomize_target": false,
+    "rgbd_perception": true,
+    "rviz": false,
+    "seed": 42,
+    "target_x_max": 0.56,
+    "target_x_min": 0.48,
+    "target_y_max": 0.06,
+    "target_y_min": -0.06,
+    "timeout_s": 360.0,
+    "transfer_diagnostics": true,
+    "trials": 1
+  },
+  "schema_version": 2,
+  "source_sha256": "b5f1383c7d24288d8a554edbc08bc1ac6d8eff00cc18223ce5aeacf28c0b987e"
+}

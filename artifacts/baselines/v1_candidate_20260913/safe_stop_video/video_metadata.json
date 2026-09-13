@@ -1,0 +1,11 @@
+{
+  "capture_date": "2026-09-13",
+  "codec": "h264",
+  "duration_s": 13.8,
+  "frame_rate_fps": 15,
+  "height": 540,
+  "playback_speed": 2.0,
+  "public_path": "docs/assets/demo/gazebo_safe_stop.mp4",
+  "sha256": "0cb9618c76ded20070be03e68ab166e36bea36316565f47e1e9471549920f46d",
+  "width": 960
+}

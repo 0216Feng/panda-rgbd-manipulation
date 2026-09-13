@@ -1,0 +1,13 @@
+{
+  "codec": "h264",
+  "duration_s": 38.2,
+  "fps": 15.0,
+  "frames": 573,
+  "height": 540,
+  "playback_speed": 2.0,
+  "sha256": "763661e421d616fdbe2b33dcd4e8f8edc19766d72b541ae22267d4ee719d971d",
+  "size_bytes": 701451,
+  "source_camera_topic": "/showcase_camera/image_raw",
+  "source_raw_duration_s": 76.2,
+  "width": 960
+}

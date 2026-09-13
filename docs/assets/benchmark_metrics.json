@@ -1,0 +1,93 @@
+{
+  "cohorts": [
+    {
+      "ci_high": 1.0,
+      "ci_low": 0.7224672001371217,
+      "label": "Fixed RGB-D",
+      "rate": 1.0,
+      "scope": "historical",
+      "successes": 10,
+      "trials": 10
+    },
+    {
+      "ci_high": 0.9911185511992042,
+      "ci_low": 0.7638688065532648,
+      "label": "Random RGB-D",
+      "rate": 0.95,
+      "scope": "historical",
+      "successes": 19,
+      "trials": 20
+    },
+    {
+      "ci_high": 0.9464932483028741,
+      "ci_low": 0.8207582512456661,
+      "label": "Static obstacles",
+      "rate": 0.9,
+      "scope": "historical",
+      "successes": 81,
+      "trials": 90
+    },
+    {
+      "ci_high": 1.0,
+      "ci_low": 0.7224672001371217,
+      "label": "Matched payload",
+      "rate": 1.0,
+      "scope": "current",
+      "successes": 10,
+      "trials": 10
+    }
+  ],
+  "payload": {
+    "loaded_mean_drift_m": 0.005620654619586845,
+    "loaded_mean_max_error_rad": 0.0021081626458210488,
+    "loaded_p95_error_rad": 0.008014695789719983,
+    "matched_pairs": 5,
+    "max_state_delta_rad": 0.004988566482725831,
+    "mean_state_delta_rad": 0.004734465248032,
+    "pair_count": 5,
+    "unloaded_mean_max_error_rad": 0.00019325748092799273
+  },
+  "planners": [
+    {
+      "name": "PRM",
+      "path_length_rad": 8.201153363643975,
+      "planning_time_s": 0.0502150225,
+      "rate": 0.9666666666666667,
+      "successes": 29,
+      "trials": 30
+    },
+    {
+      "name": "RRTConnect",
+      "path_length_rad": 8.174809270623282,
+      "planning_time_s": 0.031817636233333335,
+      "rate": 0.9333333333333333,
+      "successes": 28,
+      "trials": 30
+    },
+    {
+      "name": "RRTstar",
+      "path_length_rad": 7.662692465704994,
+      "planning_time_s": 14.77323087146154,
+      "rate": 0.8,
+      "successes": 24,
+      "trials": 30
+    }
+  ],
+  "quality": [
+    {
+      "label": "Fixed RGB-D",
+      "perception_mm": 0.5501898751003141,
+      "placement_mm": 2.164476508446895
+    },
+    {
+      "label": "Random RGB-D",
+      "perception_mm": 1.2965703255103576,
+      "placement_mm": 2.1957135169409736
+    },
+    {
+      "label": "Static obstacles",
+      "perception_mm": 0.0,
+      "placement_mm": 4.214870103382112
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+planners:
+  - id: RRTConnect
+    plugin: geometric::RRTConnect
+    planning_time: 3.0
+    range: 0.1
+  - id: PRM
+    plugin: geometric::PRM
+    planning_time: 3.0
+    max_nearest_neighbors: 10
+  - id: RRTstar
+    plugin: geometric::RRTstar
+    planning_time: 5.0
+    range: 0.1
+
+benchmark:
+  trials_per_planner: 30
+  output_csv: benchmark_results.csv
+  output_markdown: benchmark_report.md

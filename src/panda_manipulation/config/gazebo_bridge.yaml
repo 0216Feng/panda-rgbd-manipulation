@@ -1,0 +1,60 @@
+- ros_topic_name: /clock
+  gz_topic_name: /clock
+  ros_type_name: rosgraph_msgs/msg/Clock
+  gz_type_name: gz.msgs.Clock
+  direction: GZ_TO_ROS
+  qos_profile: CLOCK
+
+- ros_topic_name: /gazebo/target_pose
+  gz_topic_name: /model/target_cube/pose
+  ros_type_name: geometry_msgs/msg/Pose
+  gz_type_name: gz.msgs.Pose
+  direction: GZ_TO_ROS
+  qos_profile: SENSOR_DATA
+
+- ros_topic_name: /camera/image_raw
+  gz_topic_name: /camera/image_raw
+  ros_type_name: sensor_msgs/msg/Image
+  gz_type_name: gz.msgs.Image
+  direction: GZ_TO_ROS
+  qos_profile: SENSOR_DATA
+
+- ros_topic_name: /camera/camera_info
+  gz_topic_name: /camera/camera_info
+  ros_type_name: sensor_msgs/msg/CameraInfo
+  gz_type_name: gz.msgs.CameraInfo
+  direction: GZ_TO_ROS
+  qos_profile: SENSOR_DATA
+
+- ros_topic_name: /camera/depth/points
+  gz_topic_name: /depth_camera/points
+  ros_type_name: sensor_msgs/msg/PointCloud2
+  gz_type_name: gz.msgs.PointCloudPacked
+  direction: GZ_TO_ROS
+  qos_profile: SENSOR_DATA
+
+- ros_topic_name: /gazebo/dynamic_obstacle_pose
+  gz_topic_name: /model/dynamic_obstacle/pose
+  ros_type_name: geometry_msgs/msg/Pose
+  gz_type_name: gz.msgs.Pose
+  direction: GZ_TO_ROS
+  qos_profile: SENSOR_DATA
+
+- ros_topic_name: /gazebo/target_cube/contacts
+  gz_topic_name: /world/panda_table/model/target_cube/link/target_link/sensor/target_cube_contact/contact
+  ros_type_name: ros_gz_interfaces/msg/Contacts
+  gz_type_name: gz.msgs.Contacts
+  direction: GZ_TO_ROS
+  qos_profile: SENSOR_DATA
+
+- ros_topic_name: /gazebo/target_wrench/persistent
+  gz_topic_name: /world/panda_table/wrench/persistent
+  ros_type_name: ros_gz_interfaces/msg/EntityWrench
+  gz_type_name: gz.msgs.EntityWrench
+  direction: ROS_TO_GZ
+
+- ros_topic_name: /gazebo/target_wrench/clear
+  gz_topic_name: /world/panda_table/wrench/clear
+  ros_type_name: ros_gz_interfaces/msg/Entity
+  gz_type_name: gz.msgs.Entity
+  direction: ROS_TO_GZ

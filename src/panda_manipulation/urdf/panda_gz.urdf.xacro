@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<robot name="panda" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find panda_manipulation)/urdf/panda_balanced.urdf.xacro"/>
+
+  <link name="world"/>
+  <joint name="panda_world_joint" type="fixed">
+    <parent link="world"/>
+    <child link="panda_link0"/>
+    <origin xyz="0 0 0.72" rpy="0 0 0"/>
+  </joint>
+
+  <ros2_control name="GazeboSimSystem" type="system">
+    <hardware>
+      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+    </hardware>
+
+    <joint name="panda_joint1">
+      <command_interface name="position"/>
+      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="panda_joint2">
+      <command_interface name="position"/>
+      <state_interface name="position"><param name="initial_value">-0.785</param></state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="panda_joint3">
+      <command_interface name="position"/>
+      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="panda_joint4">
+      <command_interface name="position"/>
+      <state_interface name="position"><param name="initial_value">-2.356</param></state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="panda_joint5">
+      <command_interface name="position"/>
+      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="panda_joint6">
+      <command_interface name="position"/>
+      <state_interface name="position"><param name="initial_value">1.571</param></state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="panda_joint7">
+      <command_interface name="position"/>
+      <state_interface name="position"><param name="initial_value">0.785</param></state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="panda_finger_joint1">
+      <command_interface name="effort">
+        <param name="min">-20.0</param>
+        <param name="max">20.0</param>
+      </command_interface>
+      <state_interface name="position"><param name="initial_value">0.04</param></state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+    <joint name="panda_finger_joint2">
+      <command_interface name="effort">
+        <param name="min">-20.0</param>
+        <param name="max">20.0</param>
+      </command_interface>
+      <state_interface name="position"><param name="initial_value">0.04</param></state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+  </ros2_control>
+
+  <gazebo>
+    <plugin filename="libgz_ros2_control-system.so"
+            name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <parameters>$(find panda_manipulation)/config/gazebo_controllers.yaml</parameters>
+      <hold_joints>true</hold_joints>
+      <!-- gz_ros2_control implements position commands as a discrete first-order
+           velocity loop. Keep the gain at or below 1.0 so slow Cartesian segments
+           converge instead of oscillating around the controller goal tolerance.
+           The fingers use effort PID control below. -->
+      <position_proportional_gain>1.0</position_proportional_gain>
+    </plugin>
+  </gazebo>
+
+  <!-- The stock Panda model leaves fingertip contact at Gazebo defaults.  Give
+       both pads identical high-friction, compliant contact so a closed hand
+       can carry the cube without relying on a simulated fixed attachment. -->
+  <gazebo reference="panda_leftfinger">
+    <mu1>5.0</mu1>
+    <mu2>5.0</mu2>
+    <kp>1000000.0</kp>
+    <kd>10.0</kd>
+    <minDepth>0.0005</minDepth>
+    <maxVel>0.02</maxVel>
+  </gazebo>
+  <gazebo reference="panda_rightfinger">
+    <mu1>5.0</mu1>
+    <mu2>5.0</mu2>
+    <kp>1000000.0</kp>
+    <kd>10.0</kd>
+    <minDepth>0.0005</minDepth>
+    <maxVel>0.02</maxVel>
+  </gazebo>
+</robot>

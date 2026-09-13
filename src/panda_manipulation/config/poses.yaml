@@ -1,0 +1,23 @@
+frames:
+  base: panda_link0
+  tool: panda_hand_tcp
+
+home_joints:
+  panda_joint1: 0.0
+  panda_joint2: -0.785
+  panda_joint3: 0.0
+  panda_joint4: -2.356
+  panda_joint5: 0.0
+  panda_joint6: 1.571
+  panda_joint7: 0.785
+
+place_pose:
+  frame_id: panda_link0
+  position: {x: 0.35, y: -0.35, z: 0.16}
+  orientation_rpy: {roll: 3.14159, pitch: 0.0, yaw: -0.785}
+
+grasp:
+  approach_distance: 0.12
+  lift_distance: 0.15
+  retreat_distance: 0.10
+  lateral_offsets: [-0.04, 0.0, 0.04]

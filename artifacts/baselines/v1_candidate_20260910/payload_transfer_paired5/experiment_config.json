@@ -1,0 +1,44 @@
+{
+  "arguments": {
+    "compare_place_descent_backends": false,
+    "forced_grasp_yaw_offset_deg": null,
+    "grasp_height_offset": 0.1,
+    "grasp_prevalidation_max_rounds": 4,
+    "gripper_closed_position": 0.022,
+    "modes": [
+      "unloaded",
+      "loaded"
+    ],
+    "no_rosbag": false,
+    "payload_transfer_velocity_scaling_factor": 0.03,
+    "physical_disturbance": false,
+    "physical_disturbance_bidirectional": false,
+    "physical_disturbance_delay_s": 0.5,
+    "physical_disturbance_duration_s": 0.1,
+    "physical_disturbance_force_x_n": 0.0,
+    "physical_disturbance_force_y_n": 2.0,
+    "physical_disturbance_force_z_n": 0.0,
+    "physical_disturbance_stage": 3,
+    "physical_disturbance_stage_suite": false,
+    "physical_disturbance_stop_latency_limit_s": 0.2,
+    "place_descent_backend": "cartesian",
+    "place_descent_recovery_velocity_scaling_factor": 0.02,
+    "place_descent_stage_count": 6,
+    "place_descent_velocity_scaling_factor": 0.01,
+    "planner_id": "RRTConnectkConfigDefault",
+    "pre_place_joint_replay_positions": null,
+    "runs_per_mode": 5,
+    "servo_fault_injection_delay_s": 0.5,
+    "servo_fault_injection_stage": 2,
+    "servo_fault_injection_type": "none",
+    "servo_fault_stage_suite": false,
+    "servo_fault_suite_types": [
+      "contact_loss",
+      "payload_drift"
+    ],
+    "servo_watchdog_stop_latency_limit_s": 0.15,
+    "timeout_s": 420.0
+  },
+  "schema_version": 1,
+  "source_sha256": "862ef86cae466061f65fad6c64546f0d86ca6766475712bb19470d7fca7e988e"
+}

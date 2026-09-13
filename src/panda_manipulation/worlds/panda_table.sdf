@@ -1,0 +1,302 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <world name="panda_table">
+    <physics name="default_physics" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-contact-system" name="gz::sim::systems::Contact"/>
+    <plugin filename="gz-sim-apply-link-wrench-system"
+            name="gz::sim::systems::ApplyLinkWrench"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-sensors-system"
+            name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <gravity>0 0 -9.81</gravity>
+    <scene>
+      <ambient>0.6 0.6 0.6 1</ambient>
+      <background>0.12 0.14 0.16 1</background>
+      <shadows>true</shadows>
+    </scene>
+
+    <light name="sun" type="directional">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 8 0 0 0</pose>
+      <diffuse>0.9 0.9 0.9 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.4 0.2 -1</direction>
+    </light>
+
+    <model name="overhead_camera">
+      <static>true</static>
+      <pose>0.65 0 1.65 0 1.57079632679 0</pose>
+      <link name="camera_link">
+        <sensor name="rgb_camera" type="camera">
+          <always_on>true</always_on>
+          <update_rate>15</update_rate>
+          <visualize>true</visualize>
+          <topic>/camera/image_raw</topic>
+          <gz_frame_id>overhead_camera_optical_frame</gz_frame_id>
+          <camera>
+            <camera_info_topic>/camera/camera_info</camera_info_topic>
+            <horizontal_fov>0.65</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.05</near>
+              <far>3.0</far>
+            </clip>
+          </camera>
+        </sensor>
+        <sensor name="depth_camera" type="rgbd_camera">
+          <always_on>true</always_on>
+          <update_rate>10</update_rate>
+          <visualize>false</visualize>
+          <topic>/depth_camera</topic>
+          <gz_frame_id>overhead_depth_camera_frame</gz_frame_id>
+          <camera>
+            <horizontal_fov>1.2</horizontal_fov>
+            <image>
+              <width>160</width>
+              <height>120</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.05</near>
+              <far>3.0</far>
+            </clip>
+            <depth_camera>
+              <clip>
+                <near>0.05</near>
+                <far>3.0</far>
+              </clip>
+            </depth_camera>
+          </camera>
+        </sensor>
+      </link>
+    </model>
+
+    <!-- Inactive unless explicitly bridged by the portfolio video script. -->
+    <model name="showcase_camera">
+      <static>true</static>
+      <pose>1.80 1.25 1.25 0 0.22 -2.40</pose>
+      <link name="showcase_camera_link">
+        <sensor name="showcase_rgb_camera" type="camera">
+          <always_on>false</always_on>
+          <update_rate>15</update_rate>
+          <visualize>false</visualize>
+          <topic>/showcase_camera/image_raw</topic>
+          <gz_frame_id>showcase_camera_optical_frame</gz_frame_id>
+          <camera>
+            <horizontal_fov>1.10</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>360</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.10</near>
+              <far>5.0</far>
+            </clip>
+          </camera>
+        </sensor>
+      </link>
+    </model>
+
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><plane><normal>0 0 1</normal><size>20 20</size></plane></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><plane><normal>0 0 1</normal><size>20 20</size></plane></geometry>
+          <material><ambient>0.22 0.24 0.26 1</ambient><diffuse>0.28 0.30 0.32 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="robot_pedestal">
+      <static>true</static>
+      <pose>0 0 0.36 0 0 0</pose>
+      <link name="pedestal_link">
+        <collision name="collision">
+          <geometry><box><size>0.24 0.24 0.72</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.24 0.24 0.72</size></box></geometry>
+          <material><ambient>0.20 0.22 0.24 1</ambient><diffuse>0.30 0.33 0.36 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="work_table">
+      <static>true</static>
+      <link name="table_top">
+        <pose>0.65 0 0.69 0 0 0</pose>
+        <collision name="collision">
+          <geometry><box><size>0.9 1.1 0.06</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.9 1.1 0.06</size></box></geometry>
+          <material><ambient>0.18 0.25 0.20 1</ambient><diffuse>0.22 0.36 0.27 1</diffuse></material>
+        </visual>
+      </link>
+      <link name="front_left_leg">
+        <pose>0.30 0.45 0.33 0 0 0</pose>
+        <collision name="collision"><geometry><box><size>0.08 0.08 0.66</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.08 0.08 0.66</size></box></geometry></visual>
+      </link>
+      <link name="front_right_leg">
+        <pose>0.30 -0.45 0.33 0 0 0</pose>
+        <collision name="collision"><geometry><box><size>0.08 0.08 0.66</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.08 0.08 0.66</size></box></geometry></visual>
+      </link>
+      <link name="rear_left_leg">
+        <pose>1.00 0.45 0.33 0 0 0</pose>
+        <collision name="collision"><geometry><box><size>0.08 0.08 0.66</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.08 0.08 0.66</size></box></geometry></visual>
+      </link>
+      <link name="rear_right_leg">
+        <pose>1.00 -0.45 0.33 0 0 0</pose>
+        <collision name="collision"><geometry><box><size>0.08 0.08 0.66</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.08 0.08 0.66</size></box></geometry></visual>
+      </link>
+    </model>
+
+    <model name="target_cube">
+      <pose>0.52 0 0.76 0 0 0</pose>
+      <plugin filename="gz-sim-pose-publisher-system"
+              name="gz::sim::systems::PosePublisher">
+        <publish_link_pose>false</publish_link_pose>
+        <publish_model_pose>true</publish_model_pose>
+        <publish_nested_model_pose>false</publish_nested_model_pose>
+        <use_pose_vector_msg>false</use_pose_vector_msg>
+        <static_publisher>false</static_publisher>
+        <update_frequency>30</update_frequency>
+      </plugin>
+      <link name="target_link">
+        <inertial>
+          <mass>0.10</mass>
+          <inertia><ixx>0.00005</ixx><iyy>0.00005</iyy><izz>0.00004</izz></inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry><box><size>0.05 0.05 0.08</size></box></geometry>
+          <surface><friction><ode><mu>2.0</mu><mu2>2.0</mu2></ode></friction></surface>
+        </collision>
+        <sensor name="target_cube_contact" type="contact">
+          <always_on>true</always_on>
+          <update_rate>100</update_rate>
+          <topic>/gazebo/target_cube/contacts</topic>
+          <contact><collision>collision</collision></contact>
+        </sensor>
+        <visual name="visual">
+          <geometry><box><size>0.05 0.05 0.08</size></box></geometry>
+          <material><ambient>0.8 0.04 0.03 1</ambient><diffuse>0.95 0.08 0.05 1</diffuse></material>
+        </visual>
+        <!-- DICT_4X4_50 marker 0. The black plate provides the one-bit border;
+             white cells encode bytes {181, 50} in row-major order. -->
+        <visual name="aruco_black_plate">
+          <pose>0 0 0.0403 0 0 0</pose>
+          <cast_shadows>false</cast_shadows>
+          <geometry><box><size>0.045 0.045 0.0005</size></box></geometry>
+          <material><ambient>0 0 0 1</ambient><diffuse>0 0 0 1</diffuse></material>
+        </visual>
+        <visual name="aruco_white_r0_c0">
+          <pose>-0.01125 -0.01125 0.0406 0 0 0</pose>
+          <cast_shadows>false</cast_shadows>
+          <geometry><box><size>0.0075 0.0075 0.0004</size></box></geometry>
+          <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="aruco_white_r0_c2">
+          <pose>-0.01125 0.00375 0.0406 0 0 0</pose>
+          <cast_shadows>false</cast_shadows>
+          <geometry><box><size>0.0075 0.0075 0.0004</size></box></geometry>
+          <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="aruco_white_r0_c3">
+          <pose>-0.01125 0.01125 0.0406 0 0 0</pose>
+          <cast_shadows>false</cast_shadows>
+          <geometry><box><size>0.0075 0.0075 0.0004</size></box></geometry>
+          <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="aruco_white_r1_c1">
+          <pose>-0.00375 -0.00375 0.0406 0 0 0</pose>
+          <cast_shadows>false</cast_shadows>
+          <geometry><box><size>0.0075 0.0075 0.0004</size></box></geometry>
+          <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="aruco_white_r1_c3">
+          <pose>-0.00375 0.01125 0.0406 0 0 0</pose>
+          <cast_shadows>false</cast_shadows>
+          <geometry><box><size>0.0075 0.0075 0.0004</size></box></geometry>
+          <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="aruco_white_r2_c2">
+          <pose>0.00375 0.00375 0.0406 0 0 0</pose>
+          <cast_shadows>false</cast_shadows>
+          <geometry><box><size>0.0075 0.0075 0.0004</size></box></geometry>
+          <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="aruco_white_r2_c3">
+          <pose>0.00375 0.01125 0.0406 0 0 0</pose>
+          <cast_shadows>false</cast_shadows>
+          <geometry><box><size>0.0075 0.0075 0.0004</size></box></geometry>
+          <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="aruco_white_r3_c2">
+          <pose>0.01125 0.00375 0.0406 0 0 0</pose>
+          <cast_shadows>false</cast_shadows>
+          <geometry><box><size>0.0075 0.0075 0.0004</size></box></geometry>
+          <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="obstacle_block">
+      <static>true</static>
+      <pose>0.42 0.30 0.81 0 0 0</pose>
+      <link name="obstacle_link">
+        <collision name="collision"><geometry><box><size>0.12 0.12 0.18</size></box></geometry></collision>
+        <visual name="visual">
+          <geometry><box><size>0.12 0.12 0.18</size></box></geometry>
+          <material><ambient>0.08 0.55 0.16 1</ambient><diffuse>0.10 0.75 0.20 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="dynamic_obstacle">
+      <static>true</static>
+      <pose>0.37 -0.24 0.87 0 0 0</pose>
+      <plugin filename="gz-sim-pose-publisher-system"
+              name="gz::sim::systems::PosePublisher">
+        <publish_link_pose>false</publish_link_pose>
+        <publish_model_pose>true</publish_model_pose>
+        <publish_nested_model_pose>false</publish_nested_model_pose>
+        <use_pose_vector_msg>false</use_pose_vector_msg>
+        <static_publisher>false</static_publisher>
+        <update_frequency>20</update_frequency>
+      </plugin>
+      <link name="dynamic_obstacle_link">
+        <collision name="collision">
+          <geometry><box><size>0.12 0.12 0.30</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.12 0.12 0.30</size></box></geometry>
+          <material>
+            <ambient>0.85 0.55 0.03 1</ambient>
+            <diffuse>1.0 0.70 0.05 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+  </world>
+</sdf>

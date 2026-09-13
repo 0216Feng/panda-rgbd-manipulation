@@ -1,0 +1,89 @@
+{
+  "complete_pair_count": 5,
+  "loaded_minus_unloaded_mean_rms_tracking_error_rad": 2.4657789636117576e-05,
+  "loaded_to_unloaded_rms_tracking_error_ratio": 3.5294741046566918,
+  "matched_pair_loaded_minus_unloaded_mean_rms_tracking_error_rad": 2.4657789636117576e-05,
+  "matched_pair_rms_tracking_error_ratio": 3.5294741046566918,
+  "matched_ratio_denominator_near_zero": true,
+  "matched_state_pair_count": 5,
+  "matched_state_tolerance_rad": 0.05,
+  "max_pre_descent_joint_delta_rad": 0.004988566482725831,
+  "mean_pre_descent_joint_delta_rad": 0.004734465248032,
+  "modes": {
+    "loaded": {
+      "failure_reasons": [],
+      "mean_elapsed_s": 149.59822277899997,
+      "mean_max_payload_relative_drift_m": 0.005620654619586845,
+      "mean_max_transfer_arm_position_error_rad": 0.0021081626458210488,
+      "mean_rms_transfer_arm_position_error_rad": 3.440597784279788e-05,
+      "median_max_payload_relative_drift_m": 0.0036490111182253026,
+      "median_max_transfer_arm_position_error_rad": 0.00013050000006284423,
+      "median_rms_transfer_arm_position_error_rad": 5.7700123570803416e-06,
+      "p95_max_transfer_arm_position_error_rad": 0.008014695789719983,
+      "success_rate": 1.0,
+      "success_rate_ci": [
+        0.5655175352168251,
+        1.0
+      ],
+      "successes": 5,
+      "trials": 5
+    },
+    "unloaded": {
+      "failure_reasons": [],
+      "mean_elapsed_s": 125.78491047239997,
+      "mean_max_payload_relative_drift_m": null,
+      "mean_max_transfer_arm_position_error_rad": 0.00019325748092799273,
+      "mean_rms_transfer_arm_position_error_rad": 9.748188206680301e-06,
+      "median_max_payload_relative_drift_m": null,
+      "median_max_transfer_arm_position_error_rad": 0.00020245176300537349,
+      "median_rms_transfer_arm_position_error_rad": 7.459661757655543e-06,
+      "p95_max_transfer_arm_position_error_rad": 0.0002498869492794653,
+      "success_rate": 1.0,
+      "success_rate_ci": [
+        0.5655175352168251,
+        1.0
+      ],
+      "successes": 5,
+      "trials": 5
+    }
+  },
+  "pair_state_diagnostics": [
+    {
+      "complete": true,
+      "grasp_yaw_delta_deg": 0.0,
+      "matched": true,
+      "max_pre_descent_joint_delta_rad": 0.0049087736655155645,
+      "pair": 1
+    },
+    {
+      "complete": true,
+      "grasp_yaw_delta_deg": 0.0,
+      "matched": true,
+      "max_pre_descent_joint_delta_rad": 0.004586856597301514,
+      "pair": 2
+    },
+    {
+      "complete": true,
+      "grasp_yaw_delta_deg": 0.0,
+      "matched": true,
+      "max_pre_descent_joint_delta_rad": 0.004988566482725831,
+      "pair": 3
+    },
+    {
+      "complete": true,
+      "grasp_yaw_delta_deg": 0.0,
+      "matched": true,
+      "max_pre_descent_joint_delta_rad": 0.004719495419131747,
+      "pair": 4
+    },
+    {
+      "complete": true,
+      "grasp_yaw_delta_deg": 0.0,
+      "matched": true,
+      "max_pre_descent_joint_delta_rad": 0.004468634075485339,
+      "pair": 5
+    }
+  ],
+  "ratio_denominator_near_zero": true,
+  "total_trials": 10
+}
