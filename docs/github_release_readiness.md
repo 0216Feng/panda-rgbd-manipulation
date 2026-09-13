@@ -6,11 +6,10 @@ Updated: 2026-09-13. Target: public `v1.0` candidate repository.
 
 ## Current Decision
 
-The source tree is suitable for an initial public GitHub upload as a release
-candidate after the first-push items below are completed.
-It is not yet a final `v1.0` release because hosted CI, clean-container
-reproduction, and the frozen-commit full physical acceptance matrix remain
-open.
+The public repository is now suitable as a `v1.0` release candidate. Hosted CI
+has built the clean Docker image and passed the software and installed ROS graph
+checks. It is not yet a final `v1.0` release because the frozen-commit full
+physical acceptance matrix, final evidence curation, and release tag remain open.
 
 ## Completed For The Candidate
 
@@ -47,6 +46,9 @@ open.
   are excluded from the public evidence bundle.
 - Dockerfile, devcontainer, contribution guide, and least-privilege GitHub
   Actions workflow are present.
+- GitHub Actions run `34735251206` passed on commit `42ecae5`: the clean Docker
+  image built successfully, deterministic portfolio assets matched their public
+  evidence, all 318 tests passed, and the installed ROS graph smoke succeeded.
 - The release runner now writes each audit to a unique timestamped directory
   and uses the maintained RGB-D obstacle profile. A fresh central-barrier
   physical acceptance trial passed after this update.
@@ -62,19 +64,15 @@ open.
   H.264 clip, poster, source/config fingerprint, CSV, and JSON/Markdown safety
   verdict are retained in the public candidate bundle.
 
-## Items Before First Push
+## Completed First Publication
 
-1. Review `git diff --no-index /dev/null` equivalent through the first commit,
-   then create the initial local commit on `main`.
-2. Create the GitHub repository and remote only after choosing public/private
-   visibility; push requires explicit user confirmation.
-3. Observe the first hosted GitHub Actions run. Do not add a green badge before
-   the job actually passes.
+1. Reviewed and committed the 234-file public candidate without local career
+   documents, raw runs, build caches, credentials, or machine-specific paths.
+2. Created and pushed the public `0216Feng/panda-rgbd-manipulation` repository.
+3. Observed a successful hosted CI run before adding the workflow badge.
 
 ## Final v1.0 Gates After Upload
 
-- Build the Docker image in a clean environment and run the documented software
-  and installed ROS graph checks.
 - Re-run fixed 10 and randomized 20 RGB-D physical acceptance from one frozen
   commit. Report all attempts and Wilson intervals.
 - Run the three representative static obstacles and one safe-stop injection from

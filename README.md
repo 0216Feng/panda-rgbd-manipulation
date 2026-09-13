@@ -1,4 +1,5 @@
 [![English](https://img.shields.io/badge/lang-English-2563eb.svg)](README.md) [![简体中文](https://img.shields.io/badge/lang-简体中文-d73a49.svg)](README.zh-CN.md)
+[![ROS2 Jazzy Software Checks](https://github.com/0216Feng/panda-rgbd-manipulation/actions/workflows/ros2-ci.yml/badge.svg?branch=main)](https://github.com/0216Feng/panda-rgbd-manipulation/actions/workflows/ros2-ci.yml)
 
 # Panda RGB-D Manipulation
 
