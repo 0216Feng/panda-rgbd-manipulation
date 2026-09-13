@@ -21,6 +21,7 @@
 # runs, logs and generated worlds remain outside the build context.
 artifacts/*
 !artifacts/README.md
+!artifacts/README.zh-CN.md
 !artifacts/baselines/
 !artifacts/baselines/**
 artifacts/baselines/**/*_logs

@@ -146,6 +146,7 @@ def test_container_and_ci_keep_software_checks_distinct_from_physics():
     assert {"**/build", "**/install", "**/log", ".git", "artifacts/*"} <= set(ignore)
     assert {
         "!artifacts/README.md",
+        "!artifacts/README.zh-CN.md",
         "!artifacts/baselines/",
         "!artifacts/baselines/**",
         "artifacts/baselines/**/*_logs",
