@@ -25,6 +25,7 @@ COPY . /workspace
 RUN source /opt/ros/jazzy/setup.bash && \
     if [ ! -e /etc/ros/rosdep/sources.list.d/20-default.list ]; then rosdep init; fi && \
     rosdep update --rosdistro jazzy && \
-    rosdep install --from-paths /workspace/src --ignore-src --rosdistro jazzy -y
+    rosdep install --from-paths /workspace/src --ignore-src --rosdistro jazzy -y \
+      --skip-keys ament_python
 
 CMD ["bash"]

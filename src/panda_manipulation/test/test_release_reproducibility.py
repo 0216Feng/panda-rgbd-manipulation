@@ -141,6 +141,7 @@ def test_container_and_ci_keep_software_checks_distinct_from_physics():
     assert "|| true" not in dockerfile
     assert "COPY . /workspace\n" in dockerfile
     assert "ros-jazzy-gz-ros2-control" in dockerfile
+    assert "--skip-keys ament_python" in dockerfile
     ignore = (ROOT / ".dockerignore").read_text().splitlines()
     assert {"**/build", "**/install", "**/log", ".git", "artifacts"} <= set(ignore)
     workflow = yaml.load((ROOT / ".github/workflows/ros2-ci.yml").read_text(), Loader=yaml.BaseLoader)
