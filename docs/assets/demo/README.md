@@ -19,6 +19,10 @@ barriers between the camera and grasp point. The published H.264 clip is 38.2
 seconds at 960x540 and 15 fps. It is a 2x playback of the complete 76.2-second
 sensor stream; no task phase or failed attempt was removed.
 `gazebo_obstacle_pick_poster.png` is a frame from the lift phase.
+`gazebo_obstacle_pick_preview.webp` is the complete clip resampled to 720x405
+at 7.5 fps for inline GitHub README playback. Its 287 frames preserve the full
+38.2-second timeline while keeping the asset below 700 KiB. The MP4 remains
+the higher-frame-rate source.
 
 This is physical-contact simulation evidence, not real-robot footage. Real
 hardware demonstration remains a separate roadmap item requiring a robot,
@@ -28,7 +32,9 @@ stop procedure.
 `gazebo_safe_stop.mp4` is a third fresh-world run captured on 2026-09-13. It
 shows the robot halt after an intentional real Gazebo wrench disturbance during
 Servo descent. The 13.8-second H.264 clip is 2x playback at 960x540 and 15 fps;
-`gazebo_safe_stop_poster.png` shows the stopped loaded state.
+`gazebo_safe_stop_poster.png` shows the stopped loaded state, and
+`gazebo_safe_stop_preview.webp` is the complete 720x405, 7.5 fps inline README
+preview.
 
 ## Result
 

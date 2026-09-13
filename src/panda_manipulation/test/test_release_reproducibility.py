@@ -242,6 +242,26 @@ def test_public_safe_stop_video_matches_strict_source_bound_evidence():
     assert safety["max_stop_latency_s"] <= safety["stop_latency_limit_s"]
 
 
+def test_root_readmes_embed_lightweight_animated_gazebo_previews():
+    previews = (
+        "gazebo_obstacle_pick_preview.webp",
+        "gazebo_safe_stop_preview.webp",
+    )
+    for name in previews:
+        path = ROOT / "docs" / "assets" / "demo" / name
+        data = path.read_bytes()
+        assert 100_000 < len(data) < 1_000_000
+        assert data[:4] == b"RIFF"
+        assert data[8:12] == b"WEBP"
+
+    for readme in (ROOT / "README.md", ROOT / "README.zh-CN.md"):
+        text = readme.read_text(encoding="utf-8")
+        for name in previews:
+            assert f"docs/assets/demo/{name}" in text
+        assert "gazebo_obstacle_pick.mp4?raw=1" in text
+        assert "gazebo_safe_stop.mp4?raw=1" in text
+
+
 def test_public_docs_have_language_switches_and_pairs():
     pairs = (
         (ROOT / "README.md", ROOT / "README.zh-CN.md"),

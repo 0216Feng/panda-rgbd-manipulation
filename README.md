@@ -41,19 +41,27 @@ The captured run passed independent physical validation: `0.126 m` lift,
 required collision-aware planning. See the
 [capture provenance and exact command](docs/assets/demo/README.md).
 
-[![Gazebo physical pick-and-place video](docs/assets/demo/gazebo_obstacle_pick_poster.png)](docs/assets/demo/gazebo_obstacle_pick.mp4)
+### Gazebo Physical Pick-and-Place
 
-The linked 38.2-second opposite-side Gazebo sensor-view video shows a separate fresh-world
-run from pre-grasp through physical lift, obstacle-aware transfer, upright
-release, retreat, and return. Its independent validator measured `0.457 m`
-maximum lift, `11.5 mm` placement error, `0.00 deg` final tilt, and confirmed
-that the direct collision-aware path was blocked. The clip is 2x playback of
-the uncut 76.2-second camera stream; it is simulation footage, not a rendered
-animation or real-robot recording.
+[![Gazebo physical pick-and-place animated preview](docs/assets/demo/gazebo_obstacle_pick_preview.webp)](docs/assets/demo/gazebo_obstacle_pick.mp4?raw=1)
+
+The complete 38.2-second preview plays inline on the GitHub README. Select it
+to open the original 960x540 H.264 video.
+
+This opposite-side Gazebo sensor view shows a separate fresh-world run from
+pre-grasp through physical lift, obstacle-aware transfer, upright release,
+retreat, and return. Its independent validator measured `0.457 m` maximum
+lift, `11.5 mm` placement error, `0.00 deg` final tilt, and confirmed that the
+direct collision-aware path was blocked. The clip is 2x playback of the uncut
+76.2-second camera stream; it is simulation footage, not a rendered animation
+or real-robot recording.
 
 ### Injected Safe Stop
 
-[![Gazebo wrench safe-stop video](docs/assets/demo/gazebo_safe_stop_poster.png)](docs/assets/demo/gazebo_safe_stop.mp4)
+[![Gazebo wrench safe-stop animated preview](docs/assets/demo/gazebo_safe_stop_preview.webp)](docs/assets/demo/gazebo_safe_stop.mp4?raw=1)
+
+The complete 13.8-second preview also plays inline; select it for the original
+H.264 video.
 
 This separate 13.8-second H.264 clip shows an intentional safety failure. A
 bounded `16 N`, `100 ms` Gazebo wrench was applied during Servo descent; the

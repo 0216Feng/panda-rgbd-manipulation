@@ -6,11 +6,11 @@
 
 `obstacle_pick_sequence.gif` 是同一次运行的八帧摘要。三张 PNG 保留较高分辨率，可用于 README、技术汇报或设计评审。
 
-`gazebo_obstacle_pick.mp4` 来自 2026-09-12 的另一次 fresh-world 运行，使用 Gazebo 世界中默认关闭的对面视角传感器。该视角避免高障碍物遮挡抓取点和指尖接触。公开 H.264 视频为 960x540、15 fps、38.2 秒，是完整 76.2 秒传感器流的 2 倍速版本，没有删除任何任务阶段或失败尝试。`gazebo_obstacle_pick_poster.png` 截取自抬升阶段。
+`gazebo_obstacle_pick.mp4` 来自 2026-09-12 的另一次 fresh-world 运行，使用 Gazebo 世界中默认关闭的对面视角传感器。该视角避免高障碍物遮挡抓取点和指尖接触。公开 H.264 视频为 960x540、15 fps、38.2 秒，是完整 76.2 秒传感器流的 2 倍速版本，没有删除任何任务阶段或失败尝试。`gazebo_obstacle_pick_poster.png` 截取自抬升阶段。`gazebo_obstacle_pick_preview.webp` 将完整视频重采样为 720x405、7.5 fps、287 帧，用于 GitHub README 内联播放；其体积低于 700 KiB，MP4 继续作为高帧率原始版本。
 
 这些素材是物理接触仿真证据，不是真机画面。真机演示需要另行完成机械臂获取、标定、驱动适配、工作区安全控制和急停流程。
 
-`gazebo_safe_stop.mp4` 来自 2026-09-13 的第三次 fresh-world 运行，展示 Servo 下降期间施加真实 Gazebo wrench 后机械臂停止。13.8 秒 H.264 视频为 960x540、15 fps、2 倍速；`gazebo_safe_stop_poster.png` 展示带载停止状态。
+`gazebo_safe_stop.mp4` 来自 2026-09-13 的第三次 fresh-world 运行，展示 Servo 下降期间施加真实 Gazebo wrench 后机械臂停止。13.8 秒 H.264 视频为 960x540、15 fps、2 倍速；`gazebo_safe_stop_poster.png` 展示带载停止状态，`gazebo_safe_stop_preview.webp` 是完整 720x405、7.5 fps 的 README 内联预览。
 
 ## 运行结果
 

@@ -29,13 +29,19 @@
 
 该次采集通过独立物理验证：抬升 `0.126 m`、放置误差 `4.1 mm`、最终倾角 `0.00 deg`，并确认直线路径被障碍阻断。完整命令与来源见[演示素材说明](docs/assets/demo/README.zh-CN.md)。
 
-[![Gazebo 物理抓取视频](docs/assets/demo/gazebo_obstacle_pick_poster.png)](docs/assets/demo/gazebo_obstacle_pick.mp4)
+### Gazebo 物理抓取与放置
 
-上方 38.2 秒视频采用障碍物对面视角，覆盖抓取前接近、物理抬升、避障转运、直立释放、撤离和回原位。验证器测得最大抬升 `0.457 m`、放置误差 `11.5 mm`、最终倾角 `0.00 deg`，并确认碰撞感知直线路径受阻。视频为完整 76.2 秒相机流的 2 倍速播放，没有删减任务阶段；它是 Gazebo 仿真画面，不是真机视频。
+[![Gazebo 物理抓取动态预览](docs/assets/demo/gazebo_obstacle_pick_preview.webp)](docs/assets/demo/gazebo_obstacle_pick.mp4?raw=1)
+
+完整 38.2 秒预览会在 GitHub README 中直接播放；点击画面可打开原始 960x540 H.264 视频。
+
+该 Gazebo 对面视角覆盖抓取前接近、物理抬升、避障转运、直立释放、撤离和回原位。验证器测得最大抬升 `0.457 m`、放置误差 `11.5 mm`、最终倾角 `0.00 deg`，并确认碰撞感知直线路径受阻。视频为完整 76.2 秒相机流的 2 倍速播放，没有删减任务阶段；它是 Gazebo 仿真画面，不是真机视频。
 
 ### 故障注入安全停止
 
-[![Gazebo wrench 安全停止视频](docs/assets/demo/gazebo_safe_stop_poster.png)](docs/assets/demo/gazebo_safe_stop.mp4)
+[![Gazebo wrench 安全停止动态预览](docs/assets/demo/gazebo_safe_stop_preview.webp)](docs/assets/demo/gazebo_safe_stop.mp4?raw=1)
+
+完整 13.8 秒预览同样会在首页直接播放；点击画面可打开原始 H.264 视频。
 
 这段独立的 13.8 秒 H.264 视频展示一次预期内的安全失败：系统在 Servo 下降阶段受到 `16 N`、`100 ms` 的有界 Gazebo wrench 扰动，载荷/接触 watchdog 在 `107.8 ms` 内停止对应阶段并发布零指令，低于 `200 ms` 门槛。抓取流水线正确返回 `FAILED`，严格独立判定为 `SAFE_STOP_PASS`。证据见[源码绑定报告](artifacts/baselines/v1_candidate_20260913/safe_stop_video/README.md)。
 
