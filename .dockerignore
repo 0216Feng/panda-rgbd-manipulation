@@ -8,7 +8,6 @@
 **/build
 **/install
 **/log
-artifacts
 *_logs
 *.log
 *.csv
@@ -17,3 +16,13 @@ artifacts
 .env.*
 **/*.db3
 **/*.mcap
+
+# Keep committed evidence used by deterministic portfolio checks, while raw
+# runs, logs and generated worlds remain outside the build context.
+artifacts/*
+!artifacts/README.md
+!artifacts/baselines/
+!artifacts/baselines/**
+artifacts/baselines/**/*_logs
+artifacts/baselines/**/*.log
+artifacts/baselines/**/worlds

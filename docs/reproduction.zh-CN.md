@@ -31,7 +31,7 @@ docker build -t panda-manipulation:dev .
 docker run --rm -it panda-manipulation:dev bash
 ```
 
-镜像中的 `/workspace` 是项目根目录。构建后运行软件验证，并 source `/workspace/install/setup.bash`。镜像安装无界面 CI 实际使用的依赖，任何安装失败仍会使构建失败；`ament_python` 已由 ROS 基础镜像提供。由于部分公开 Jazzy apt 快照不发布 `ros-jazzy-moveit-servo`，容器 rosdep 明确排除可选的 `moveit_servo` runtime；Servo 演示仍在维护者原生 WSL2 环境中支持并验证。`.dockerignore` 排除了 Git 元数据、已有构建、密钥、实验产物和 rosbag。devcontainer 将当前 checkout 映射到 `/workspace`，默认用于无界面软件开发，不包含 GUI 转发设置。
+镜像中的 `/workspace` 是项目根目录。构建后运行软件验证，并 source `/workspace/install/setup.bash`。镜像安装无界面 CI 实际使用的依赖，任何安装失败仍会使构建失败；`ament_python` 已由 ROS 基础镜像提供。由于部分公开 Jazzy apt 快照不发布 `ros-jazzy-moveit-servo`，容器 rosdep 明确排除可选的 `moveit_servo` runtime；Servo 演示仍在维护者原生 WSL2 环境中支持并验证。`.dockerignore` 排除了 Git 元数据、已有构建、密钥、原始实验 runs/logs 和 rosbag，同时保留确定性作品集检查所需的已提交基线数据。devcontainer 将当前 checkout 映射到 `/workspace`，默认用于无界面软件开发，不包含 GUI 转发设置。
 
 ## CI 范围
 

@@ -143,7 +143,15 @@ def test_container_and_ci_keep_software_checks_distinct_from_physics():
     assert "ros-jazzy-gz-ros2-control" in dockerfile
     assert '--skip-keys "ament_python moveit_servo"' in dockerfile
     ignore = (ROOT / ".dockerignore").read_text().splitlines()
-    assert {"**/build", "**/install", "**/log", ".git", "artifacts"} <= set(ignore)
+    assert {"**/build", "**/install", "**/log", ".git", "artifacts/*"} <= set(ignore)
+    assert {
+        "!artifacts/README.md",
+        "!artifacts/baselines/",
+        "!artifacts/baselines/**",
+        "artifacts/baselines/**/*_logs",
+        "artifacts/baselines/**/*.log",
+        "artifacts/baselines/**/worlds",
+    } <= set(ignore)
     workflow = yaml.load((ROOT / ".github/workflows/ros2-ci.yml").read_text(), Loader=yaml.BaseLoader)
     assert set(workflow["on"]) == {"push", "pull_request", "workflow_dispatch"}
     assert workflow["permissions"] == {"contents": "read"}
