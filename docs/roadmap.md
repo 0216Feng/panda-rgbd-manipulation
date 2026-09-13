@@ -8,9 +8,9 @@ Evolve the current ROS2, MoveIt2, and Gazebo portfolio from a reproducible
 simulation prototype into a manipulation system that can be transferred to
 real hardware and defended with quantitative engineering evidence.
 
-The immediate priority is a credible public GitHub candidate. New algorithms
-must not displace reproducibility, failure retention, documentation, or the
-remaining release gates.
+The v1.0 public baseline is released. Work now proceeds through M2 in measured,
+source-bound increments without weakening reproducibility, failure retention,
+documentation, or the frozen v1.0 evidence boundary.
 
 ## Current Baseline
 
@@ -24,14 +24,25 @@ remaining release gates.
 - Fresh-world benchmark runners with raw failures, source/config fingerprints,
   CSV/JSON/Markdown/SVG output, and independent Gazebo scoring.
 - Bilingual public documentation, screenshots, animation, and Gazebo video.
+- A separate C++17 package with a reusable trajectory-quality library, online
+  observer, gtest coverage, ROS graph integration, and benchmark export.
 
 The current system is simulation-only. Gazebo ground truth participates in
 online payload monitoring and scoring, the main execution pipeline is Python,
 and no hardware calibration or safety case has been completed.
 
+M1 is complete at the frozen v1.0 boundary. The first M2 increment was verified
+on 2026-09-13: both packages built, the current tree passed 329
+colcon-reported tests, an installed graph emitted C++ metrics, and one RGB-D
+fresh-world physical smoke retained those metrics in CSV/Markdown. This single
+physical run is integration evidence, not a new reliability claim.
+
 ## Milestones
 
 ### M1: Trusted Physical Simulation Loop
+
+Status: complete in v1.0. The immutable acceptance evidence remains tied to
+source revision `2fa0440`.
 
 - Freeze one candidate source revision.
 - Run fixed 10 and seeded random 20 RGB-D physical acceptance batches.
@@ -45,6 +56,9 @@ error at most 10 mm, mean placement error at most 50 mm, and final tilt at most
 
 ### M2: Algorithm Depth and C++ Mainline
 
+Status: in progress. Metric collection has moved to a C++17 observer while task
+management and MoveIt command ownership remain on the validated Python path.
+
 - Migrate task management, MoveIt calls, and metrics to C++17 in measured steps.
 - Add a MoveIt Task Constructor comparison pipeline.
 - Compare sampling, optimization, and industrial motion methods such as OMPL,
@@ -52,6 +66,10 @@ error at most 10 mm, mean placement error at most 50 mm, and final tilt at most
 - Score grasp candidates using manipulability, joint-limit margin, obstacle
   clearance, path length, and smoothness.
 - Add Jacobian conditioning, singularity, and joint-jump diagnostics.
+
+Next checkpoint: add manipulability and scene-clearance metrics to candidate
+scoring, publish an ablation over fixed candidate sets, then evaluate a second
+planning family without conflating physical reliability with planner quality.
 
 Acceptance: at least 90 planning experiments, planner comparisons covering
 success, time, length, smoothness, and minimum clearance, plus one ablation.

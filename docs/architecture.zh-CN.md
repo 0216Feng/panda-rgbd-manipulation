@@ -22,6 +22,9 @@ flowchart LR
   Depth --> Tracker["depth_obstacle_tracker"]
   Tracker --> PlanningScene
   Pipeline --> Path["/display_planned_path"]
+  Path --> Quality["trajectory_metrics_node<br/>C++17"]
+  Quality --> QualityTopic["/trajectory_quality_metrics"]
+  QualityTopic --> Pipeline
   Path --> Safety["trajectory_safety_monitor"]
   Tracker --> Safety
   Safety --> Replan["/dynamic_replan_request"]
@@ -50,11 +53,14 @@ flowchart LR
 - `run_gazebo_physics_benchmark.py`：每轮启动独立世界，构造规划器/场景/感知矩阵并导出报告。
 - `depth_obstacle_tracker`：聚类 RGB-D 点云，转换到 `panda_link0`，加入方向性安全余量并更新感知障碍物。
 - `trajectory_safety_monitor`：采样剩余轨迹，通过 `/check_state_validity` 检查状态，在新障碍使路径失效时请求取消。
+- `trajectory_metrics_node`：C++17 只读观察节点，测量每段 `DisplayTrajectory` 的路径长度、关节步长、速度、加速度、平滑度、绕行比、终端状态与关节限位裕度；抓取结果和 fresh-world benchmark 保留其汇总值。
 - `run_dynamic_replanning_benchmark.py`：运行规划器、动态场景与重复次数矩阵，记录感知、停止、重规划、轨迹代价和物理结果。
 
 ## 执行与验证边界
 
 MoveIt2 负责机器人状态、碰撞检查、attached object 语义以及 OMPL/Cartesian 轨迹生成；ros2_control 在 Gazebo 中执行七轴机械臂与两根手指。Gazebo 专用模型移除了物理引擎不支持的 mimic constraint，而 MoveIt 模型仍保留 Panda 的 mimic 语义。
+
+C++ 指标包被刻意放在控制路径之外：它订阅已显示轨迹并发布诊断，但不能规划、取消或执行运动。这样可以在不改变已验证抓取行为的前提下，形成第一步可量化的 Python 到 C++ 迁移。实验源码指纹同时覆盖两个 ROS 包，因此观察节点变化会拒绝继续使用不兼容的 benchmark checkpoint。设计理由见 [ADR 0001](adr/0001-cpp-trajectory-quality-observer.zh-CN.md)。
 
 流水线报告 `SUCCESS` 并不足以通过验收。独立验证器读取物体真值，检查实际抬升高度、最终放置误差、直立姿态和回原位。障碍实验还对比关闭碰撞与开启碰撞的直线路径，只有“直线路径确实受阻，并由替代轨迹完成物理任务”才计为避障成功。
 

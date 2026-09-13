@@ -52,6 +52,7 @@ from panda_manipulation.pick_plan_pipeline import (
     release_object_motion,
     rigid_payload_translation_error,
     staged_place_feedback_poses,
+    summarize_cpp_trajectory_metrics,
     target_position_in_measurement_frame,
     matching_contact_collision_names,
     translation_distance,
@@ -66,6 +67,55 @@ from panda_manipulation.task_state_machine import (
 
 
 class GeometryTests(unittest.TestCase):
+    def test_cpp_trajectory_metric_summary_preserves_quality_extrema(self):
+        summary = summarize_cpp_trajectory_metrics(
+            [
+                {
+                    "schema_version": 1,
+                    "aggregate": {
+                        "joint_path_length_rad": 1.25,
+                        "max_joint_step_rad": 0.30,
+                        "integrated_squared_acceleration": 4.0,
+                    },
+                    "metrics": [
+                        {"min_normalized_joint_limit_margin": 0.20},
+                        {"min_normalized_joint_limit_margin": 0.15},
+                    ],
+                },
+                {
+                    "schema_version": 1,
+                    "aggregate": {
+                        "joint_path_length_rad": 0.75,
+                        "max_joint_step_rad": 0.45,
+                        "integrated_squared_acceleration": 2.5,
+                    },
+                    "metrics": [
+                        {"min_normalized_joint_limit_margin": 0.10},
+                    ],
+                },
+                {
+                    "schema_version": 2,
+                    "aggregate": {"joint_path_length_rad": 999.0},
+                    "metrics": [],
+                },
+                {
+                    "schema_version": 1,
+                    "aggregate": {"joint_path_length_rad": "invalid"},
+                    "metrics": [],
+                },
+            ]
+        )
+        self.assertEqual(summary["message_count"], 3)
+        self.assertEqual(summary["trajectory_segment_count"], 3)
+        self.assertAlmostEqual(summary["joint_path_length_rad"], 2.0)
+        self.assertAlmostEqual(summary["max_joint_step_rad"], 0.45)
+        self.assertAlmostEqual(
+            summary["integrated_squared_acceleration"], 6.5
+        )
+        self.assertAlmostEqual(
+            summary["min_normalized_joint_limit_margin"], 0.10
+        )
+
     def test_joint_replay_csv_requires_one_complete_finite_arm_state(self):
         self.assertEqual(
             parse_joint_positions_csv("0, 1, 2, 3, 4, 5, 6"),

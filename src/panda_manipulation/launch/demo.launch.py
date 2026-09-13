@@ -13,6 +13,12 @@ def generate_launch_description():
             DeclareLaunchArgument("use_synthetic_pose", default_value="true"),
             DeclareLaunchArgument("dry_run", default_value="true"),
             Node(
+                package="panda_manipulation_cpp",
+                executable="trajectory_metrics_node",
+                name="trajectory_metrics_node",
+                output="screen",
+            ),
+            Node(
                 package="panda_manipulation",
                 executable="scene_manager",
                 name="scene_manager",

@@ -292,6 +292,62 @@ def joint_trajectory_quality_metrics(
     return metrics
 
 
+def summarize_cpp_trajectory_metrics(
+    messages: List[Dict[str, object]],
+) -> Dict[str, object]:
+    """Aggregate C++ metrics without recomputing the trajectory in Python."""
+    aggregates = [
+        message.get("aggregate")
+        for message in messages
+        if isinstance(message, dict)
+        and message.get("schema_version") == 1
+        and isinstance(message.get("aggregate"), dict)
+    ]
+    trajectory_metrics = [
+        metric
+        for message in messages
+        if isinstance(message, dict)
+        and message.get("schema_version") == 1
+        for metric in message.get("metrics", [])
+        if isinstance(metric, dict)
+    ]
+
+    def finite_values(items: List[object], key: str) -> List[float]:
+        values = []
+        for item in items:
+            if not isinstance(item, dict):
+                continue
+            value = item.get(key)
+            if value is None:
+                continue
+            try:
+                number = float(value)
+            except (TypeError, ValueError):
+                continue
+            if isfinite(number):
+                values.append(number)
+        return values
+
+    path_lengths = finite_values(aggregates, "joint_path_length_rad")
+    smoothness = finite_values(
+        aggregates,
+        "integrated_squared_acceleration",
+    )
+    max_steps = finite_values(aggregates, "max_joint_step_rad")
+    margins = finite_values(
+        trajectory_metrics,
+        "min_normalized_joint_limit_margin",
+    )
+    return {
+        "message_count": len(aggregates),
+        "trajectory_segment_count": len(trajectory_metrics),
+        "joint_path_length_rad": sum(path_lengths),
+        "max_joint_step_rad": max(max_steps) if max_steps else None,
+        "integrated_squared_acceleration": sum(smoothness),
+        "min_normalized_joint_limit_margin": min(margins) if margins else None,
+    }
+
+
 def place_descent_trajectory_quality_error(
     step_name: str,
     metrics: Dict[str, object],
@@ -2206,6 +2262,7 @@ def main(args: List[str] | None = None) -> None:
                     qos_profile_sensor_data,
                 )
             self.display_publisher = self.create_publisher(DisplayTrajectory, "/display_planned_path", 10)
+            self.cpp_trajectory_metrics_history: List[Dict[str, object]] = []
             self.move_client = ActionClient(self, MoveGroup, self.move_action_name)
             self.execute_client = ActionClient(
                 self,
@@ -2229,6 +2286,12 @@ def main(args: List[str] | None = None) -> None:
             self.diagnostic_validity_client = self.create_client(GetStateValidity, "/check_state_validity")
             self.create_subscription(String, "/grasp_candidates", self.on_grasp_candidates, 10)
             self.create_subscription(JointState, "/joint_states", self.on_joint_state, 10)
+            self.create_subscription(
+                String,
+                "/trajectory_quality_metrics",
+                self.on_cpp_trajectory_metrics,
+                10,
+            )
             if self.enable_dynamic_replanning:
                 self.create_subscription(
                     String,
@@ -2356,6 +2419,16 @@ def main(args: List[str] | None = None) -> None:
                 self.stop_joint_state_wait_timer()
                 self.start_pipeline(candidate)
 
+        def on_cpp_trajectory_metrics(self, message: String) -> None:
+            try:
+                payload = json.loads(message.data)
+            except (TypeError, ValueError):
+                return
+            if not isinstance(payload, dict) or payload.get("schema_version") != 1:
+                return
+            self.cpp_trajectory_metrics_history.append(payload)
+            self.cpp_trajectory_metrics_history = self.cpp_trajectory_metrics_history[-100:]
+
         def on_grasp_candidates(self, message: String) -> None:
             if self.plan_once and self.has_started:
                 return
@@ -2432,6 +2505,7 @@ def main(args: List[str] | None = None) -> None:
             self.candidate = deepcopy(self.base_candidate)
             self.steps = []
             self.cartesian_trajectory_metrics = []
+            self.cpp_trajectory_metrics_history = []
             self.pre_grasp_fallback_used = False
             self.home_diagnostic_used = False
             self.approach_recovery_used = False
@@ -8800,6 +8874,14 @@ def main(args: List[str] | None = None) -> None:
                     ),
                     "cartesian_trajectory_metrics": (
                         self.cartesian_trajectory_metrics
+                    ),
+                    "cpp_trajectory_metrics_history": (
+                        self.cpp_trajectory_metrics_history
+                    ),
+                    "cpp_trajectory_metrics_summary": (
+                        summarize_cpp_trajectory_metrics(
+                            self.cpp_trajectory_metrics_history
+                        )
                     ),
                     "cartesian_start_state_replan_max_retries": (
                         self.cartesian_start_state_replan_max_retries

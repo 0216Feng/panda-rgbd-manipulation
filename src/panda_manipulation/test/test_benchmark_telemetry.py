@@ -49,6 +49,15 @@ def test_resume_rejects_source_change(runner, monkeypatch, tmp_path):
         runner.guard_checkpoint_config(args)
 
 
+def test_source_manifest_includes_cpp_runtime_and_build_definition(runner):
+    files = runner.benchmark_source_manifest()["files"]
+    assert "src/panda_manipulation_cpp/CMakeLists.txt" in files
+    assert (
+        "src/panda_manipulation_cpp/src/trajectory_metrics_node.cpp"
+        in files
+    )
+
+
 @pytest.fixture
 def runner(monkeypatch):
     script = Path(__file__).resolve().parents[3] / "scripts/run_gazebo_physics_benchmark.py"

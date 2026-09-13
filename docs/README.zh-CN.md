@@ -9,6 +9,7 @@
 - [演示与录制指南](demo_script.zh-CN.md)
 - [GitHub 发布检查](github_release_readiness.zh-CN.md)
 - [长期路线图](roadmap.zh-CN.md)
+- [ADR 0001：C++ 轨迹质量观察节点](adr/0001-cpp-trajectory-quality-observer.zh-CN.md)
 - [演示素材来源](assets/demo/README.zh-CN.md)
 
 上述公开文档均维护英文和简体中文版本，可使用页面顶部的语言徽章切换。

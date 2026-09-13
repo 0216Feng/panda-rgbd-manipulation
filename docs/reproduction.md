@@ -39,11 +39,11 @@ The devcontainer binds the current checkout at `/workspace`, so edits target the
 
 `.github/workflows/ros2-ci.yml` builds this same Dockerfile on an Ubuntu 24.04 GitHub runner, then runs:
 
-1. `colcon build`, the complete package test suite, and `colcon test-result`.
-2. An installed ROS graph smoke that observes `/detected_object_pose`, `/grasp_candidates` and `/task_state` in an isolated ROS domain.
+1. `colcon build`, the complete Python and C++ package test suites, and `colcon test-result`.
+2. An installed ROS graph smoke that observes `/detected_object_pose`, `/grasp_candidates`, and `/task_state`, then publishes a synthetic trajectory and validates `/trajectory_quality_metrics` in an isolated ROS domain.
 3. Test XML and log collection even when a preceding check fails.
 
-The ROS graph smoke uses `use_synthetic_pose:=true` and `dry_run:=true`. Its JSON explicitly reports `physical_execution_verified: false`. A pass proves installed entrypoints and the synthetic topic chain work; it does not prove perception accuracy, motion planning, Gazebo contact or physical grasp success. Each attempt keeps a separate log directory, and timeout returns a nonzero status.
+The ROS graph smoke uses `use_synthetic_pose:=true` and `dry_run:=true`. Its JSON explicitly reports `physical_execution_verified: false`. A pass proves installed entrypoints, the synthetic topic chain, and C++ trajectory metric computation work; it does not prove perception accuracy, MoveIt planning, Gazebo contact, or physical grasp success. Each attempt keeps a separate log directory, and timeout returns a nonzero status. The current local ROS2 Jazzy tree reports 329 passing tests; the frozen v1.0 release evidence remains 318/318.
 
 The hosted workflow does not launch MoveIt Servo. Use the native setup for Servo, Gazebo GUI and physical simulation workflows until a supported Servo binary is available in the public Jazzy apt snapshot used by the container build.
 

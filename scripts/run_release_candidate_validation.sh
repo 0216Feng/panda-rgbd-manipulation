@@ -11,10 +11,13 @@ source /opt/ros/jazzy/setup.bash
 cd "${ROOT_DIR}"
 mkdir -p "${OUTPUT_DIR}/rgbd" "${OUTPUT_DIR}/obstacle"
 
-colcon build --symlink-install --packages-select panda_manipulation
+colcon build --symlink-install --packages-select \
+  panda_manipulation panda_manipulation_cpp
 source install/setup.bash
 set -u
-colcon test --packages-select panda_manipulation --event-handlers console_direct+
+colcon test --packages-select \
+  panda_manipulation panda_manipulation_cpp \
+  --event-handlers console_direct+
 colcon test-result --verbose
 
 if [[ "${SKIP_PHYSICAL:-0}" == "1" ]]; then

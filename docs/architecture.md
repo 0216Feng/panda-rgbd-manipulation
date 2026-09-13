@@ -45,6 +45,9 @@ flowchart LR
   DepthTracker --> DynamicPose["/dynamic_obstacle_pose"]
   DepthTracker --> PlanningScene
   PickPipeline --> DisplayPath["/display_planned_path"]
+  DisplayPath --> QualityMetrics["trajectory_metrics_node<br/>C++17"]
+  QualityMetrics --> QualityTopic["/trajectory_quality_metrics"]
+  QualityTopic --> PickPipeline
   DisplayPath --> SafetyMonitor["trajectory_safety_monitor"]
   DynamicPose --> SafetyMonitor
   SafetyMonitor --> StateValidity["/check_state_validity"]
@@ -83,12 +86,24 @@ flowchart LR
 - `depth_obstacle_tracker`: clusters the Gazebo RGB-D point cloud, transforms detections into `panda_link0`, applies directional collision padding, and owns the sensed dynamic PlanningScene object.
 - `dynamic_obstacle_controller`: moves the obstacle across the active workspace and halts it when the trajectory safety monitor raises a hazard.
 - `trajectory_safety_monitor`: samples the remaining states of active OMPL trajectories, calls MoveIt's state-validity service, and requests cancellation when a newly sensed obstacle invalidates the path.
+- `trajectory_metrics_node`: a C++17 read-only observer that measures each
+  `DisplayTrajectory` segment and publishes path length, joint step, velocity,
+  acceleration, smoothness, tortuosity, terminal state, and joint-limit-margin
+  metrics. The pick result and fresh-world benchmark retain its aggregates.
 - `dynamic_obstacle_perception_validator`: compares RGB-D obstacle estimates with Gazebo ground truth and reports position error, latency, and tracking span.
 - `run_dynamic_replanning_benchmark.py`: builds planner x dynamic-scenario x repeat matrices in isolated worlds and exports per-trial CSV plus grouped Markdown/SVG statistics for perception, safety-check, cancellation, replanning, OMPL cost, and physical placement.
 
 ## Execution And Validation Boundary
 
 MoveIt2 owns robot-state planning, collision checking, attached-object semantics, and OMPL/Cartesian trajectory generation. `ros2_control` executes the arm and both Panda finger joints in Gazebo. The Gazebo-specific robot description removes the unsupported physical mimic constraint while the MoveIt model retains Panda's original mimic semantics.
+
+The C++ metrics package is deliberately outside the command path: it subscribes
+to displayed trajectories and publishes diagnostics, but cannot plan, cancel,
+or execute motion. This makes the first Python-to-C++ migration step measurable
+without changing the validated manipulation behavior. Experiment source
+fingerprints cover both ROS packages, so changing the observer invalidates an
+incompatible benchmark checkpoint. See
+[ADR 0001](adr/0001-cpp-trajectory-quality-observer.md).
 
 Pipeline success alone is insufficient. The validator independently reads the simulated object's ground-truth pose and checks lift height, final placement error, upright orientation, and return-home. Challenge trials additionally compare collision-disabled and collision-aware Cartesian direct paths before OMPL execution, so an avoidance success requires measured obstruction plus a physically validated alternative trajectory.
 

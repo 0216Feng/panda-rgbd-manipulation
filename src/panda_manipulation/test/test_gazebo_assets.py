@@ -7,6 +7,14 @@ PACKAGE_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 
 class GazeboAssetTests(unittest.TestCase):
+    def test_python_launch_package_declares_cpp_runtime_dependency(self):
+        package_path = os.path.join(PACKAGE_ROOT, "package.xml")
+        root = ET.parse(package_path).getroot()
+        dependencies = {
+            element.text for element in root.findall("exec_depend")
+        }
+        self.assertIn("panda_manipulation_cpp", dependencies)
+
     def test_gazebo_demo_view_is_installed_and_forwarded(self):
         config_path = os.path.join(
             PACKAGE_ROOT,

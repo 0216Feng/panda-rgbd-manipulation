@@ -20,6 +20,8 @@ from typing import Any, Dict, Optional
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 PACKAGE_ROOT = REPO_ROOT / "src" / "panda_manipulation"
+CPP_PACKAGE_ROOT = REPO_ROOT / "src" / "panda_manipulation_cpp"
+PACKAGE_ROOTS = (PACKAGE_ROOT, CPP_PACKAGE_ROOT)
 DEFAULT_WORLD_PATH = PACKAGE_ROOT / "worlds" / "panda_table.sdf"
 sys.path.insert(0, str(PACKAGE_ROOT))
 
@@ -438,7 +440,7 @@ def run_trial(
 
 
 SOURCE_SUFFIXES = {
-    ".cfg", ".cpp", ".h", ".hpp", ".json", ".py", ".rviz", ".sdf",
+    ".cfg", ".cmake", ".cpp", ".h", ".hpp", ".json", ".py", ".rviz", ".sdf",
     ".urdf", ".xacro", ".xml", ".yaml", ".yml",
 }
 
@@ -446,12 +448,17 @@ SOURCE_SUFFIXES = {
 def benchmark_source_manifest():
     """Fingerprint executable benchmark inputs without recording machine paths."""
     candidates = {Path(__file__).resolve()}
-    if PACKAGE_ROOT.is_dir():
+    for package_root in PACKAGE_ROOTS:
+        if not package_root.is_dir():
+            continue
         candidates.update(
             path.resolve()
-            for path in PACKAGE_ROOT.rglob("*")
+            for path in package_root.rglob("*")
             if path.is_file()
-            and path.suffix.lower() in SOURCE_SUFFIXES
+            and (
+                path.suffix.lower() in SOURCE_SUFFIXES
+                or path.name == "CMakeLists.txt"
+            )
             and "__pycache__" not in path.parts
         )
     entries = {}

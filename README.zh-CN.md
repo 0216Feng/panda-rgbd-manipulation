@@ -12,6 +12,7 @@
 - 基于 RGB 分割与深度聚类的无标记 RGB-D 目标定位。
 - 使用 PlanningScene 表达碰撞几何，支持 RRTConnect、PRM 与 RRTstar。
 - OMPL 与 Cartesian 混合执行，并基于实测关节状态重规划。
+- 经 gtest 验证的 C++17 轨迹质量观察节点，在线统计路径长度、平滑度、关节步长与归一化关节限位裕度。
 - 独立的机械臂控制器与双指同步 ros2_control 控制器。
 - Gazebo 接触抓取、载荷漂移监测、直立放置、撤离和回原位验证。
 - 静态/动态障碍实验、结构化失败原因、CSV/JSON/Markdown 报告、rosbag 与源码/配置指纹。
@@ -56,6 +57,9 @@ flowchart LR
     Grasp --> Pipeline[抓取流水线]
     Scene[PlanningScene] --> Planning[OMPL 与 Cartesian 规划]
     Pipeline --> Planning
+    Planning --> DisplayPath[规划轨迹]
+    DisplayPath --> Quality[C++17 轨迹质量]
+    Quality --> Pipeline
     Planning --> Arm[机械臂控制器]
     Pipeline --> Hand[双指控制器]
     Arm --> Gazebo[Gazebo 接触动力学]
@@ -175,7 +179,8 @@ python3 scripts/run_payload_transfer_diagnostics.py \
 
 ```text
 .
-|-- src/panda_manipulation/   # ROS2 节点、launch、配置、模型和测试
+|-- src/panda_manipulation/   # Python ROS2 主流程、launch、配置与测试
+|-- src/panda_manipulation_cpp/ # C++17 轨迹质量库、节点与 gtest
 |-- scripts/                  # 安装、smoke test 与实验 runner
 |-- artifacts/baselines/      # 可公开的精简数据、报告和配置证据
 |-- docs/                     # 架构、验证和技术路线图
@@ -185,14 +190,14 @@ python3 scripts/run_payload_transfer_diagnostics.py \
 
 ## 验证边界
 
-当前维护者 ROS2 Jazzy 环境中共有 318 项软件测试通过。GitHub Actions 将构建 Docker 镜像、运行软件检查并验证已安装的合成 ROS 节点图；在首次推送并实际观察 hosted CI 前，不声明 CI 已通过。
+当前开发树在维护者 ROS2 Jazzy 环境中通过 colcon 汇总的 `329` 项测试。已安装节点图 smoke 还会发布合成 `DisplayTrajectory`，并校验 C++17 `/trajectory_quality_metrics` 输出。GitHub Actions 构建 Docker 镜像、测试两个 ROS 包并重复节点图检查；这些当前开发树结果与上文冻结版本的 `318/318` 验收证据分开统计。
 
 Gazebo 目标真值与接触数据目前参与在线载荷监测、有界纠偏和最终评分。RGB-D 提供目标估计，但系统因此不是纯视觉控制器。目标检测采用颜色/聚类方法，并非任意物体 6D 位姿估计器。
 
 当前限制：
 
 - 仅完成仿真，无真机驱动、手眼标定或硬件安全论证。
-- 主执行流水线为 Python，C++ 实时边界仍在后续计划中。
+- 任务编排与 MoveIt 执行仍为 Python；首个 C++17 边界目前仅做观测，不拥有控制指令权限。
 - 接触效果依赖 Gazebo 物理参数、摩擦和控制器调参。
 - MoveIt Servo 为可选实验下降后端；当前发布证据使用 Cartesian path。
 
@@ -206,6 +211,7 @@ Gazebo 目标真值与接触数据目前参与在线载荷监测、有界纠偏�
 - [演示与录制](docs/demo_script.zh-CN.md)
 - [发布检查](docs/github_release_readiness.zh-CN.md)
 - [长期路线图](docs/roadmap.zh-CN.md)
+- [C++ 轨迹观察节点 ADR](docs/adr/0001-cpp-trajectory-quality-observer.zh-CN.md)
 
 ## 许可证
 

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>panda_manipulation_cpp</name>
+  <version>0.1.0</version>
+  <description>C++17 trajectory-quality metrics and runtime diagnostics for Panda manipulation.</description>
+  <maintainer email="90129509+0216Feng@users.noreply.github.com">HUO ZHIFENG</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>moveit_msgs</depend>
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+  <depend>trajectory_msgs</depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

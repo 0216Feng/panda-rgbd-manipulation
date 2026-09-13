@@ -52,6 +52,12 @@ CSV_FIELDS = [
     "perception_detection_rate",
     "ompl_planning_time_s",
     "ompl_joint_path_length_rad",
+    "cpp_trajectory_message_count",
+    "cpp_trajectory_segment_count",
+    "cpp_joint_path_length_rad",
+    "cpp_max_joint_step_rad",
+    "cpp_integrated_squared_acceleration",
+    "cpp_min_normalized_joint_limit_margin",
     "elapsed_s",
     "failure_category",
     "reason",
@@ -259,6 +265,7 @@ def validation_to_row(
     """Flatten a validator payload into a stable CSV row."""
     initial = payload.get("initial_pose") or [None, None, None]
     final = payload.get("final_pose") or [None, None, None]
+    cpp_metrics = payload.get("cpp_trajectory_metrics_summary") or {}
     return {
         "trial": trial,
         "scenario_index": payload.get("scenario_index"),
@@ -315,6 +322,18 @@ def validation_to_row(
         ),
         "ompl_planning_time_s": payload.get("ompl_planning_time_s"),
         "ompl_joint_path_length_rad": payload.get("ompl_joint_path_length_rad"),
+        "cpp_trajectory_message_count": cpp_metrics.get("message_count"),
+        "cpp_trajectory_segment_count": cpp_metrics.get(
+            "trajectory_segment_count"
+        ),
+        "cpp_joint_path_length_rad": cpp_metrics.get("joint_path_length_rad"),
+        "cpp_max_joint_step_rad": cpp_metrics.get("max_joint_step_rad"),
+        "cpp_integrated_squared_acceleration": cpp_metrics.get(
+            "integrated_squared_acceleration"
+        ),
+        "cpp_min_normalized_joint_limit_margin": cpp_metrics.get(
+            "min_normalized_joint_limit_margin"
+        ),
         "elapsed_s": elapsed_s,
         "failure_category": failure_category(
             payload.get("reason"),
@@ -362,6 +381,36 @@ def summarize(rows: Iterable[Dict[str, Any]]) -> Dict[str, Any]:
         float(row["ompl_joint_path_length_rad"])
         for row in successful
         if row.get("ompl_joint_path_length_rad") is not None
+    ]
+    cpp_telemetry_rows = [
+        row
+        for row in successful
+        if int(row.get("cpp_trajectory_message_count") or 0) > 0
+    ]
+    cpp_segment_counts = [
+        float(row["cpp_trajectory_segment_count"])
+        for row in cpp_telemetry_rows
+        if row.get("cpp_trajectory_segment_count") is not None
+    ]
+    cpp_path_lengths = [
+        float(row["cpp_joint_path_length_rad"])
+        for row in cpp_telemetry_rows
+        if row.get("cpp_joint_path_length_rad") is not None
+    ]
+    cpp_max_steps = [
+        float(row["cpp_max_joint_step_rad"])
+        for row in cpp_telemetry_rows
+        if row.get("cpp_max_joint_step_rad") is not None
+    ]
+    cpp_smoothness_costs = [
+        float(row["cpp_integrated_squared_acceleration"])
+        for row in cpp_telemetry_rows
+        if row.get("cpp_integrated_squared_acceleration") is not None
+    ]
+    cpp_joint_limit_margins = [
+        float(row["cpp_min_normalized_joint_limit_margin"])
+        for row in cpp_telemetry_rows
+        if row.get("cpp_min_normalized_joint_limit_margin") is not None
     ]
     initial_x_values = [float(row["initial_x"]) for row in rows if row.get("initial_x") is not None]
     initial_y_values = [float(row["initial_y"]) for row in rows if row.get("initial_y") is not None]
@@ -428,6 +477,31 @@ def summarize(rows: Iterable[Dict[str, Any]]) -> Dict[str, Any]:
             for row in planner_successes
             if row.get("ompl_joint_path_length_rad") is not None
         ]
+        planner_cpp_rows = [
+            row
+            for row in planner_successes
+            if int(row.get("cpp_trajectory_message_count") or 0) > 0
+        ]
+        planner_cpp_path_lengths = [
+            float(row["cpp_joint_path_length_rad"])
+            for row in planner_cpp_rows
+            if row.get("cpp_joint_path_length_rad") is not None
+        ]
+        planner_cpp_max_steps = [
+            float(row["cpp_max_joint_step_rad"])
+            for row in planner_cpp_rows
+            if row.get("cpp_max_joint_step_rad") is not None
+        ]
+        planner_cpp_smoothness_costs = [
+            float(row["cpp_integrated_squared_acceleration"])
+            for row in planner_cpp_rows
+            if row.get("cpp_integrated_squared_acceleration") is not None
+        ]
+        planner_cpp_joint_limit_margins = [
+            float(row["cpp_min_normalized_joint_limit_margin"])
+            for row in planner_cpp_rows
+            if row.get("cpp_min_normalized_joint_limit_margin") is not None
+        ]
         planner_tilts = [
             float(row["final_tilt_deg"])
             for row in planner_successes
@@ -465,6 +539,22 @@ def summarize(rows: Iterable[Dict[str, Any]]) -> Dict[str, Any]:
             "std_planning_time_s": stddev(planner_planning_times),
             "mean_joint_path_length_rad": mean(planner_path_lengths),
             "std_joint_path_length_rad": stddev(planner_path_lengths),
+            "cpp_telemetry_trials": len(planner_cpp_rows),
+            "mean_cpp_joint_path_length_rad": mean(
+                planner_cpp_path_lengths
+            ),
+            "mean_cpp_max_joint_step_rad": mean(planner_cpp_max_steps),
+            "mean_cpp_integrated_squared_acceleration": mean(
+                planner_cpp_smoothness_costs
+            ),
+            "mean_cpp_min_normalized_joint_limit_margin": mean(
+                planner_cpp_joint_limit_margins
+            ),
+            "worst_cpp_normalized_joint_limit_margin": (
+                min(planner_cpp_joint_limit_margins)
+                if planner_cpp_joint_limit_margins
+                else None
+            ),
         }
 
     scenario_results = []
@@ -654,6 +744,26 @@ def summarize(rows: Iterable[Dict[str, Any]]) -> Dict[str, Any]:
         "blocked_direct_paths": len(blocked_direct_paths),
         "mean_ompl_planning_time_s": mean(planning_time_values),
         "mean_ompl_joint_path_length_rad": mean(path_length_values),
+        "cpp_telemetry_trials": len(cpp_telemetry_rows),
+        "cpp_telemetry_coverage": (
+            len(cpp_telemetry_rows) / len(successful)
+            if successful
+            else None
+        ),
+        "mean_cpp_trajectory_segment_count": mean(cpp_segment_counts),
+        "mean_cpp_joint_path_length_rad": mean(cpp_path_lengths),
+        "mean_cpp_max_joint_step_rad": mean(cpp_max_steps),
+        "mean_cpp_integrated_squared_acceleration": mean(
+            cpp_smoothness_costs
+        ),
+        "mean_cpp_min_normalized_joint_limit_margin": mean(
+            cpp_joint_limit_margins
+        ),
+        "worst_cpp_normalized_joint_limit_margin": (
+            min(cpp_joint_limit_margins)
+            if cpp_joint_limit_margins
+            else None
+        ),
         "initial_x_range": (
             [min(initial_x_values), max(initial_x_values)] if initial_x_values else None
         ),
@@ -720,6 +830,25 @@ def render_markdown(summary: Dict[str, Any]) -> str:
                 f"{metric(summary['mean_ompl_joint_path_length_rad'], 4)} rad",
             ]
         )
+    if summary["cpp_telemetry_trials"]:
+        lines.extend(
+            [
+                "- C++ trajectory telemetry coverage: "
+                f"{summary['cpp_telemetry_trials']}/{summary['successes']} "
+                f"successful trials ({summary['cpp_telemetry_coverage']:.1%})",
+                "- Mean C++ observed trajectory segments: "
+                f"{metric(summary['mean_cpp_trajectory_segment_count'], 2)}",
+                "- Mean C++ observed joint path length: "
+                f"{metric(summary['mean_cpp_joint_path_length_rad'])} rad",
+                "- Mean C++ maximum joint step: "
+                f"{metric(summary['mean_cpp_max_joint_step_rad'])} rad",
+                "- Mean C++ integrated squared acceleration: "
+                f"{metric(summary['mean_cpp_integrated_squared_acceleration'])}",
+                "- Mean / worst C++ normalized joint-limit margin: "
+                f"{metric(summary['mean_cpp_min_normalized_joint_limit_margin'])} / "
+                f"{metric(summary['worst_cpp_normalized_joint_limit_margin'])}",
+            ]
+        )
     lines.extend(
         [
             f"- Raw mean trial time: {metric(summary['mean_elapsed_s'], 2)} s",
@@ -749,9 +878,12 @@ def render_markdown(summary: Dict[str, Any]) -> str:
                 "",
                 "| Planner | Raw success | Valid-start success | Infra failures | "
                 "OMPL time (mean +/- std) | Joint path (mean +/- std) | "
+                "C++ telemetry | C++ smoothness / max step | "
+                "C++ mean / worst limit margin | "
                 "Valid-start trial time (mean +/- std) | "
                 "Place error (mean +/- std) |",
-                "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+                "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | "
+                "---: | ---: | ---: |",
             ]
         )
         for planner, result in summary["planner_results"].items():
@@ -766,6 +898,11 @@ def render_markdown(summary: Dict[str, Any]) -> str:
                 f"{metric(result['std_planning_time_s'])} s | "
                 f"{metric(result['mean_joint_path_length_rad'])} +/- "
                 f"{metric(result['std_joint_path_length_rad'])} rad | "
+                f"{result['cpp_telemetry_trials']}/{result['successes']} | "
+                f"{metric(result['mean_cpp_integrated_squared_acceleration'])} / "
+                f"{metric(result['mean_cpp_max_joint_step_rad'])} rad | "
+                f"{metric(result['mean_cpp_min_normalized_joint_limit_margin'])} / "
+                f"{metric(result['worst_cpp_normalized_joint_limit_margin'])} | "
                 f"{metric(result['mean_valid_start_elapsed_s'], 2)} +/- "
                 f"{metric(result['std_valid_start_elapsed_s'], 2)} s | "
                 f"{metric(result['mean_place_error_m'])} +/- "
@@ -845,7 +982,6 @@ def render_planner_comparison_svg(summary: Dict[str, Any]) -> str:
         raise ValueError("planner comparison requires at least one planner")
 
     width = 1200
-    height = 760
     colors = {
         "RRTConnectkConfigDefault": "#0f766e",
         "PRMkConfigDefault": "#d97706",
@@ -877,6 +1013,29 @@ def render_planner_comparison_svg(summary: Dict[str, Any]) -> str:
             "seconds",
         ),
     ]
+    has_cpp_telemetry = any(
+        int(planner_results[planner].get("cpp_telemetry_trials") or 0) > 0
+        for planner in planners
+    )
+    if has_cpp_telemetry:
+        panels.extend(
+            [
+                (
+                    "Mean C++ smoothness cost",
+                    "Integrated squared acceleration across observed plans",
+                    "mean_cpp_integrated_squared_acceleration",
+                    "scalar",
+                ),
+                (
+                    "Worst C++ joint-limit margin",
+                    "Minimum normalized margin in successful trials",
+                    "worst_cpp_normalized_joint_limit_margin",
+                    "margin",
+                ),
+            ]
+        )
+    panel_rows = math.ceil(len(panels) / 2)
+    height = 760 + max(0, panel_rows - 2) * 316
     values_by_key = {
         key: [
             float(planner_results[planner].get(key) or 0.0)
@@ -912,6 +1071,8 @@ def render_planner_comparison_svg(summary: Dict[str, Any]) -> str:
             return f"{value:.4f} s"
         if scale == "radians":
             return f"{value:.3f} rad"
+        if scale in {"scalar", "margin"}:
+            return f"{value:.3f}"
         return f"{value:.1f} s"
 
     svg = [
@@ -925,7 +1086,7 @@ def render_planner_comparison_svg(summary: Dict[str, Any]) -> str:
             "<desc id=\"desc\">Physical success rate, OMPL planning time, "
             "joint path length and end-to-end time by planner.</desc>"
         ),
-        '<rect width="1200" height="760" fill="#f8fafc"/>',
+        f'<rect width="{width}" height="{height}" fill="#f8fafc"/>',
         (
             '<text x="48" y="52" font-family="Arial, sans-serif" '
             'font-size="28" font-weight="700" fill="#111827">'
@@ -944,7 +1105,10 @@ def render_planner_comparison_svg(summary: Dict[str, Any]) -> str:
         ),
     ]
 
-    panel_positions = [(40, 112), (610, 112), (40, 428), (610, 428)]
+    panel_positions = [
+        (40 + (index % 2) * 570, 112 + (index // 2) * 316)
+        for index in range(len(panels))
+    ]
     for (title, subtitle, key, scale), (panel_x, panel_y) in zip(
         panels,
         panel_positions,
@@ -1007,7 +1171,7 @@ def render_planner_comparison_svg(summary: Dict[str, Any]) -> str:
     svg.extend(
         [
             (
-                '<text x="48" y="742" font-family="Arial, sans-serif" '
+                f'<text x="48" y="{height - 18}" font-family="Arial, sans-serif" '
                 'font-size="12" fill="#64748b">'
                 "Success requires collision-aware planning, physical lift, "
                 "upright placement and return-home.</text>"
@@ -1204,6 +1368,28 @@ def read_report_rows(csv_path: str | Path) -> List[Dict[str, Any]]:
                 if normalized == "false"
                 else None
             )
+        for count_key in (
+            "cpp_trajectory_message_count",
+            "cpp_trajectory_segment_count",
+        ):
+            count = row.get(count_key)
+            if isinstance(count, str):
+                try:
+                    row[count_key] = int(count)
+                except ValueError:
+                    row[count_key] = None
+        for metric_key in (
+            "cpp_joint_path_length_rad",
+            "cpp_max_joint_step_rad",
+            "cpp_integrated_squared_acceleration",
+            "cpp_min_normalized_joint_limit_margin",
+        ):
+            metric_value = row.get(metric_key)
+            if isinstance(metric_value, str):
+                try:
+                    row[metric_key] = float(metric_value)
+                except ValueError:
+                    row[metric_key] = None
     return rows
 
 

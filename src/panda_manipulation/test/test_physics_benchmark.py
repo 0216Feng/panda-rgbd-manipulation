@@ -94,6 +94,14 @@ class PhysicsBenchmarkTests(unittest.TestCase):
                 "direct_path_blocked": True,
                 "ompl_planning_time_s": 0.25,
                 "ompl_joint_path_length_rad": 2.5,
+                "cpp_trajectory_metrics_summary": {
+                    "message_count": 4,
+                    "trajectory_segment_count": 6,
+                    "joint_path_length_rad": 3.2,
+                    "max_joint_step_rad": 0.31,
+                    "integrated_squared_acceleration": 7.5,
+                    "min_normalized_joint_limit_margin": 0.18,
+                },
             },
             20.0,
         )
@@ -121,6 +129,16 @@ class PhysicsBenchmarkTests(unittest.TestCase):
         self.assertEqual(summary["blocked_direct_paths"], 1)
         self.assertAlmostEqual(summary["mean_ompl_planning_time_s"], 0.25)
         self.assertAlmostEqual(summary["mean_ompl_joint_path_length_rad"], 2.5)
+        self.assertEqual(summary["cpp_telemetry_trials"], 1)
+        self.assertEqual(summary["cpp_telemetry_coverage"], 1.0)
+        self.assertAlmostEqual(summary["mean_cpp_joint_path_length_rad"], 3.2)
+        self.assertAlmostEqual(summary["mean_cpp_max_joint_step_rad"], 0.31)
+        self.assertAlmostEqual(
+            summary["mean_cpp_integrated_squared_acceleration"], 7.5
+        )
+        self.assertAlmostEqual(
+            summary["worst_cpp_normalized_joint_limit_margin"], 0.18
+        )
 
     def test_reports_include_physical_metrics(self):
         row = validation_to_row(
@@ -140,6 +158,14 @@ class PhysicsBenchmarkTests(unittest.TestCase):
                 "direct_path_blocked": True,
                 "ompl_planning_time_s": 0.2,
                 "ompl_joint_path_length_rad": 2.2,
+                "cpp_trajectory_metrics_summary": {
+                    "message_count": 3,
+                    "trajectory_segment_count": 5,
+                    "joint_path_length_rad": 2.8,
+                    "max_joint_step_rad": 0.25,
+                    "integrated_squared_acceleration": 6.2,
+                    "min_normalized_joint_limit_margin": 0.22,
+                },
             },
             18.0,
         )
@@ -158,10 +184,25 @@ class PhysicsBenchmarkTests(unittest.TestCase):
             self.assertIn("## Planner Comparison", report_text)
             self.assertIn("Collision-aware direct paths blocked: 1/1", report_text)
             self.assertIn("Mean OMPL planning time: 0.2000 s", report_text)
+            self.assertIn("C++ trajectory telemetry coverage: 1/1", report_text)
+            self.assertIn(
+                "Mean C++ integrated squared acceleration: 6.2000",
+                report_text,
+            )
+            self.assertIn(
+                "Mean / worst C++ normalized joint-limit margin: "
+                "0.2200 / 0.2200",
+                report_text,
+            )
             self.assertTrue(os.path.exists(csv_path))
             loaded_rows = read_report_rows(csv_path)
             self.assertEqual(len(loaded_rows), 1)
             self.assertIs(loaded_rows[0]["direct_path_blocked"], True)
+            self.assertEqual(loaded_rows[0]["cpp_trajectory_message_count"], 3)
+            self.assertAlmostEqual(
+                loaded_rows[0]["cpp_integrated_squared_acceleration"],
+                6.2,
+            )
 
     def test_saved_spawner_failures_are_reclassified_without_hiding_raw_trials(self):
         row = validation_to_row(
@@ -232,6 +273,14 @@ class PhysicsBenchmarkTests(unittest.TestCase):
                         "direct_path_blocked": True,
                         "ompl_planning_time_s": planning_time,
                         "ompl_joint_path_length_rad": path_length,
+                        "cpp_trajectory_metrics_summary": {
+                            "message_count": 4,
+                            "trajectory_segment_count": 4,
+                            "joint_path_length_rad": path_length + 1.0,
+                            "max_joint_step_rad": 0.2 + trial * 0.01,
+                            "integrated_squared_acceleration": 2.0 + trial,
+                            "min_normalized_joint_limit_margin": 0.3 - trial * 0.02,
+                        },
                     },
                     elapsed,
                 )
@@ -244,6 +293,8 @@ class PhysicsBenchmarkTests(unittest.TestCase):
         self.assertIn("RRTstar", svg)
         self.assertIn("Mean OMPL planning time", svg)
         self.assertIn("Mean joint-space path length", svg)
+        self.assertIn("Mean C++ smoothness cost", svg)
+        self.assertIn("Worst C++ joint-limit margin", svg)
         self.assertIn("16.0000 s", svg)
 
         with tempfile.TemporaryDirectory() as directory:

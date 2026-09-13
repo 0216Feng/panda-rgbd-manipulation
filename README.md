@@ -17,6 +17,8 @@ roles. It does not claim real-robot deployment or industrial safety validation.
 - Markerless RGB-D target localization from RGB segmentation and depth clusters.
 - PlanningScene collision geometry with RRTConnect, PRM, and RRTstar support.
 - Hybrid OMPL and Cartesian execution with measured-state replanning.
+- A tested C++17 trajectory-quality observer for path length, smoothness,
+  joint-step, and normalized joint-limit-margin telemetry.
 - Independent ros2_control arm and synchronized two-finger controllers.
 - Gazebo contact-based grasping, payload-drift monitoring, upright placement,
   retreat, and return-home verification.
@@ -81,6 +83,9 @@ flowchart LR
     Grasp --> Pipeline[Pick pipeline]
     Scene[PlanningScene] --> Planning[OMPL and Cartesian planning]
     Pipeline --> Planning
+    Planning --> DisplayPath[Planned trajectories]
+    DisplayPath --> Quality[C++17 trajectory quality]
+    Quality --> Pipeline
     Planning --> Arm[Arm controller]
     Pipeline --> Hand[Finger controller]
     Arm --> Gazebo[Gazebo contact dynamics]
@@ -236,6 +241,10 @@ incompatible arguments or source revisions.
 |   |-- urdf/                 # Panda simulation model override
 |   |-- worlds/               # Gazebo task worlds
 |   `-- test/                 # unit and regression tests
+|-- src/panda_manipulation_cpp/
+|   |-- include/              # reusable trajectory-quality API
+|   |-- src/                  # online ROS2 metrics observer
+|   `-- test/                 # C++ gtest coverage
 |-- scripts/                  # setup, smoke tests and experiment runners
 |-- artifacts/baselines/      # compact public CSV/report/config evidence
 |-- docs/                     # architecture, validation and technical roadmap
@@ -245,11 +254,12 @@ incompatible arguments or source revisions.
 
 ## Validation Scope
 
-Software validation currently contains 318 passing package tests in the
-maintainer's ROS2 Jazzy environment. The prepared GitHub workflow builds the
-Docker image, runs software checks, and verifies the installed synthetic ROS
-graph. A hosted CI run must be observed after the first push before a green CI
-claim is made.
+The current development tree passes `329` colcon-reported tests in the
+maintainer's ROS2 Jazzy environment. The installed-graph smoke also publishes a
+synthetic `DisplayTrajectory` and validates the C++17
+`/trajectory_quality_metrics` output. GitHub Actions builds the Docker image,
+runs both ROS packages, and repeats this graph-level check. These current-tree
+checks are separate from the frozen `318/318` v1.0 evidence above.
 
 Gazebo ground-truth object pose and contact data currently participate in online
 payload monitoring, bounded correction, and final scoring. RGB-D supplies the
@@ -259,7 +269,8 @@ target detector is color/cluster based, not an arbitrary-object 6D estimator.
 Other current limitations:
 
 - Simulation only; no hardware driver, hand-eye calibration, or hardware safety case.
-- Main execution pipeline is Python; a C++ real-time boundary is future work.
+- Task orchestration and MoveIt execution remain Python. The first C++17
+  boundary is an observer only and has no command authority.
 - Contact behavior depends on Gazebo physics, friction, and controller tuning.
 - MoveIt Servo remains an optional experimental descent backend; release evidence
   above uses the Cartesian path.
@@ -275,6 +286,7 @@ C++ execution, calibration, and force-control work.
 - [Demo and recording guide](docs/demo_script.md)
 - [Release readiness](docs/github_release_readiness.md)
 - [Long-term roadmap](docs/roadmap.md)
+- [C++ trajectory observer ADR](docs/adr/0001-cpp-trajectory-quality-observer.md)
 - [Payload diagnostics](docs/payload_transfer_diagnostics.md)
 - [Dynamic replanning results](docs/dynamic_replanning_results.md)
 

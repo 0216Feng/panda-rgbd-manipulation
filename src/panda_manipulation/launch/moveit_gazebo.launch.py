@@ -27,6 +27,7 @@ def generate_launch_description():
     obstacle_size_x = LaunchConfiguration("obstacle_size_x")
     obstacle_size_y = LaunchConfiguration("obstacle_size_y")
     obstacle_size_z = LaunchConfiguration("obstacle_size_z")
+    enable_trajectory_metrics = LaunchConfiguration("enable_trajectory_metrics")
 
     package_share = get_package_share_directory("panda_manipulation")
     panda_moveit_share = get_package_share_directory("moveit_resources_panda_moveit_config")
@@ -83,6 +84,7 @@ def generate_launch_description():
             DeclareLaunchArgument("obstacle_size_x", default_value="0.12"),
             DeclareLaunchArgument("obstacle_size_y", default_value="0.12"),
             DeclareLaunchArgument("obstacle_size_z", default_value="0.18"),
+            DeclareLaunchArgument("enable_trajectory_metrics", default_value="true"),
             DeclareLaunchArgument("static_environment_world", default_value=""),
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(gazebo_launch),
@@ -99,6 +101,14 @@ def generate_launch_description():
                 name="move_group",
                 output="screen",
                 parameters=[moveit_config.to_dict(), {"use_sim_time": True}],
+            ),
+            Node(
+                package="panda_manipulation_cpp",
+                executable="trajectory_metrics_node",
+                name="trajectory_metrics_node",
+                output="screen",
+                parameters=[{"use_sim_time": True}],
+                condition=IfCondition(enable_trajectory_metrics),
             ),
             Node(
                 package="moveit_servo",

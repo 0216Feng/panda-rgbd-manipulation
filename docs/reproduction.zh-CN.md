@@ -37,11 +37,11 @@ docker run --rm -it panda-manipulation:dev bash
 
 `.github/workflows/ros2-ci.yml` 在 Ubuntu 24.04 runner 上构建同一个 Dockerfile，并依次执行：
 
-1. `colcon build`、完整包测试与 `colcon test-result`。
-2. 在隔离 ROS domain 中检查 `/detected_object_pose`、`/grasp_candidates` 与 `/task_state`。
+1. `colcon build`、完整 Python/C++ 双包测试与 `colcon test-result`。
+2. 在隔离 ROS domain 中检查 `/detected_object_pose`、`/grasp_candidates` 与 `/task_state`，随后发布合成轨迹并校验 `/trajectory_quality_metrics`。
 3. 即使前一步失败，也收集测试 XML 与日志。
 
-节点图 smoke 使用 `use_synthetic_pose:=true` 与 `dry_run:=true`，JSON 明确写入 `physical_execution_verified: false`。通过仅证明安装后的入口和合成 topic 链路可用，不证明视觉精度、规划、Gazebo 接触或物理抓取。
+节点图 smoke 使用 `use_synthetic_pose:=true` 与 `dry_run:=true`，JSON 明确写入 `physical_execution_verified: false`。通过仅证明安装后的入口、合成 topic 链路与 C++ 轨迹指标计算可用，不证明视觉精度、MoveIt 规划、Gazebo 接触或物理抓取。当前本地 ROS2 Jazzy 开发树汇总 `329` 项测试通过；冻结 `v1.0` 证据仍保持 `318/318`。
 
 Hosted workflow 不启动 MoveIt Servo。在公开 Jazzy apt 快照提供受支持的 Servo 二进制包之前，Servo、Gazebo GUI 与物理仿真流程应使用原生 WSL2 安装。
 

@@ -39,7 +39,7 @@ jobs:
         run: |
           mkdir -p ci-results
           if docker inspect panda-ci-checks >/dev/null 2>&1; then
-            for path in build/panda_manipulation/pytest.xml log artifacts/runs/ros_graph_smoke; do
+            for path in build/panda_manipulation/pytest.xml build/panda_manipulation_cpp/test_results log artifacts/runs/ros_graph_smoke; do
               docker cp "panda-ci-checks:/workspace/$path" ci-results/ || printf 'Unavailable: %s\n' "$path"
             done
           fi

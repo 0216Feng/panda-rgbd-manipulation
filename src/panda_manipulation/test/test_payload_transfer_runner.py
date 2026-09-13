@@ -206,6 +206,15 @@ def test_paired_checkpoint_binds_arguments_and_source(tmp_path, monkeypatch):
     assert checkpoint.read_text() == "evidence"
 
 
+def test_paired_source_manifest_includes_cpp_runtime_and_build_definition():
+    files = MODULE.paired_source_manifest()["files"]
+    assert "src/panda_manipulation_cpp/CMakeLists.txt" in files
+    assert (
+        "src/panda_manipulation_cpp/src/trajectory_metrics_node.cpp"
+        in files
+    )
+
+
 def test_physical_disturbance_forces_builds_opposite_direction_pair():
     assert MODULE.physical_disturbance_forces(False, 0.0, 4.0, 1.0) == (
         (0.0, 4.0, 1.0),

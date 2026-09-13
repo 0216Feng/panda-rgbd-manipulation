@@ -9,6 +9,7 @@
 - [Demo and recording guide](demo_script.md)
 - [GitHub release readiness](github_release_readiness.md)
 - [Long-term roadmap](roadmap.md)
+- [ADR 0001: C++ trajectory-quality observer](adr/0001-cpp-trajectory-quality-observer.md)
 - [Demo capture provenance](assets/demo/README.md)
 
 These public-facing guides have maintained English and Simplified Chinese

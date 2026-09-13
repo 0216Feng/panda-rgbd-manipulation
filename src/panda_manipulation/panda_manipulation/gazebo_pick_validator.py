@@ -197,6 +197,7 @@ def main(args: List[str] | None = None) -> None:
                     "ompl_planning_time_s",
                     "ompl_joint_path_length_rad",
                     "ompl_metrics",
+                    "cpp_trajectory_metrics_summary",
                 ):
                     payload[key] = self.pipeline_result.get(key)
             message = String()

@@ -27,6 +27,7 @@ def generate_launch_description():
     manage_target_collision = LaunchConfiguration("manage_target_collision")
     use_synthetic_pose = LaunchConfiguration("use_synthetic_pose")
     dry_run = LaunchConfiguration("dry_run")
+    start_trajectory_metrics = LaunchConfiguration("start_trajectory_metrics")
 
     panda_demo_launch = PathJoinSubstitution(
         [
@@ -57,7 +58,15 @@ def generate_launch_description():
             DeclareLaunchArgument("manage_target_collision", default_value="false"),
             DeclareLaunchArgument("use_synthetic_pose", default_value="true"),
             DeclareLaunchArgument("dry_run", default_value="true"),
+            DeclareLaunchArgument("start_trajectory_metrics", default_value="true"),
             IncludeLaunchDescription(PythonLaunchDescriptionSource(panda_demo_launch)),
+            Node(
+                package="panda_manipulation_cpp",
+                executable="trajectory_metrics_node",
+                name="trajectory_metrics_node",
+                output="screen",
+                condition=IfCondition(start_trajectory_metrics),
+            ),
             Node(
                 package="panda_manipulation",
                 executable="scene_manager",
